@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">FinTrack-BangkitCapstone2024</string>
+
+    <!--    Auth and upload csv-->
+    <string name="hi_welcome_back">Hi, Welcome Back! 👋</string>
+    <string name="lorem_ipsum_dolor_sit_amet_consectetur">Lorem ipsum dolor sit amet, consectetur</string>
+    <string name="image">image</string>
+    <string name="email">Email Address</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="password">Password</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="don_t_have_an_account">Don’t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="confirm_your_password">Confirm Your Password</string>
+    <string name="if_you_have_account">if you have account? </string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="enter_your_business_name">Enter Your Business Name</string>
+    <string name="upload">Upload</string>
+    <string name="import_your_finance_report">Import Your Finance Report</string>
+    <string name="import_your_finance_report_if_you_have">Import your finance report if you have</string>
+    <string name="logo_csv">logo_csv</string>
+    <string name="drag_your_file_s_to_start_uploading">Drag your file(s) to start uploading</string>
+    <string name="or">OR</string>
+    <string name="choose_file">Choose File</string>
+    <string name="login">Login</string>
+    <string name="name">Name</string>
+
+    <!--    CustomView-->
+    <string name="formatEmalW">Incorrect Email Format</string>
+    <string name="email_already">The email you entered is already registered, please change your email</string>
+    <string name="emtyName">Name cannot be empty</string>
+    <string name="PassMust8C">Password must be at least 8 characters</string>
+    <string name="passwords_dont_match">Passwords don\'t match</string>
+
+    <!--    Modal-->
+    <string name="is_your_business_new">IS YOUR BUSINESS NEW?</string>
+    <string name="has_your_business_been_running_for_some_time_and_has_financial_records">Has your business been running for some time and has financial records?</string>
+    <string name="yes">Yes</string>
+    <string name="i_don_t_have_financial_recording_data">I don\'t have financial recording data</string>
+    <string name="no">No</string>
+
+
+
+</resources>

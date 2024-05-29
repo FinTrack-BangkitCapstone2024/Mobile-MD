@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Anda bisa mengganti warna ini -->
+            <corners android:radius="10dp"/> <!-- Anda bisa mengganti radius ini untuk mengubah seberapa bulat tombol -->
+            <stroke android:color="#FF0000" android:width="2dp"/> <!-- Anda bisa mengganti warna dan lebar stroke ini -->
+        </shape>
+    </item>
+</selector>

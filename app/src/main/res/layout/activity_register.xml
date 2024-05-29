@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".RegisterActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:letterSpacing="0.02"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Create Account"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:textColor="#78828A"
+            android:text="@string/lorem_ipsum_dolor_sit_amet_consectetur"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_marginTop="25dp"
+            android:layout_height="300dp"
+            android:src="@drawable/ilustrator_register"
+            android:layout_marginBottom="25dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/image" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/name"
+                android:fontFamily="@font/inter_semibold"
+                android:layout_marginStart="20dp"
+                android:textSize="14sp"/>
+
+
+            <com.example.fintrack_bangkitcapstone2024.Component.CvName
+                android:id="@+id/cv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:letterSpacing="0.02"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/border_ed"
+                android:hint="@string/enter_your_name" />
+
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="start"
+            android:text="@string/email"
+            android:fontFamily="@font/inter_semibold"
+            android:layout_marginStart="20dp"
+            android:textSize="14sp"/>
+
+        <com.example.fintrack_bangkitcapstone2024.Component.CvEmail
+            android:id="@+id/cv_login_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:letterSpacing="0.02"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/border_ed"
+            android:hint="@string/enter_your_email" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="start"
+            android:text="Password"
+            android:fontFamily="@font/inter_semibold"
+            android:layout_marginStart="20dp"
+            android:textSize="14sp"/>
+
+        <com.example.fintrack_bangkitcapstone2024.Component.CvPass
+            android:id="@+id/cv_pass_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_your_password"
+            android:letterSpacing="0.02"
+            android:background="@drawable/border_ed"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="start"
+            android:text="@string/confirm_password"
+            android:fontFamily="@font/inter_semibold"
+            android:layout_marginStart="20dp"
+            android:textSize="14sp"/>
+
+        <com.example.fintrack_bangkitcapstone2024.Component.CvPassSame
+            android:id="@+id/cv_pass_same"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/confirm_your_password"
+            android:letterSpacing="0.02"
+            android:background="@drawable/border_ed"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:layout_marginHorizontal="20dp"
+            android:fontFamily="@font/inter"
+            android:background="@drawable/border_buttom"
+            app:backgroundTint="@color/black"
+            android:text="Sign Up"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#9CA4AB"
+                android:fontFamily="@font/inter"
+                android:layout_marginEnd="8dp"
+                android:text="@string/if_you_have_account"/>
+
+            <TextView
+                android:id="@+id/btn_to_signin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#159595"
+                android:fontFamily="@font/inter"
+                android:text="@string/sign_in"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+            <View
+                android:layout_gravity="center"
+                android:layout_width="62dp"
+                android:layout_height="1dp"
+                android:background="#9CA4AB"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#9CA4AB"
+                android:text="Or Sign In with"
+                android:layout_marginHorizontal="8dp"/>
+
+            <View
+                android:layout_gravity="center"
+                android:layout_width="62dp"
+                android:layout_height="1dp"
+                android:background="#9CA4AB"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <Button
+                android:backgroundTint="#F4E7E7"
+                style="?attr/materialIconButtonStyle"
+                android:id="@+id/iconButtonF"
+                android:layout_width="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/logo_facebookk"
+                />
+            <Button
+                android:backgroundTint="#F4E7E7"
+                style="?attr/materialIconButtonStyle"
+                android:id="@+id/iconButtonG"
+                android:layout_marginHorizontal="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/img"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</ScrollView>

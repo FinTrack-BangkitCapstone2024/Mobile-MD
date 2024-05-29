@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.FinTrackBangkitCapstone2024" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<!--        <item name="fontFamily">@font/inter</item>-->
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <style name="Theme.FinTrackBangkitCapstone2024" parent="Base.Theme.FinTrackBangkitCapstone2024" />
+</resources>
