@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.addInput.setOnClickListener{
-            startActivity(Intent(this, AddTransaksiActivitya::class.java))
+            startActivity(Intent(this, AddTransaksiActivity::class.java))
         }
 
     }
