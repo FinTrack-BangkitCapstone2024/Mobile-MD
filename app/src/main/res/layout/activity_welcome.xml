@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".WelcomeActivity">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ilustrator_login"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to my Application"
+        android:fontFamily="@font/inter_semibold"
+        android:textSize="24sp"
+        android:letterSpacing="0"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lorem ipsum dolor sit amet, consectetur"
+        android:textColor="#78828A"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/btn_to_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="138dp"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/inter"
+        android:background="@drawable/border_buttom"
+        app:backgroundTint="@color/black"
+        android:text="Login"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+        <View
+            android:layout_gravity="center"
+            android:layout_width="62dp"
+            android:layout_height="1dp"
+            android:background="#9CA4AB"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#9CA4AB"
+            android:text="Or"
+            android:layout_marginHorizontal="8dp"/>
+
+        <View
+            android:layout_gravity="center"
+            android:layout_width="62dp"
+            android:layout_height="1dp"
+            android:background="#9CA4AB"/>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_to_regis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/inter"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/border_buttom"
+        app:backgroundTint="#2280FF"
+        android:text="Login"/>
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>

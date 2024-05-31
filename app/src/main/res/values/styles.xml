@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomCardShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+
+<!--    Main Activity-->
+    <!-- Style untuk inner MaterialCardView -->
+    <style name="InnerCardViewStyle">
+        <item name="android:layout_width">105dp</item>
+        <item name="android:layout_height">100dp</item>
+    </style>
+
+    <!-- Style untuk LinearLayout -->
+    <style name="CenterLinearLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+
+</resources>

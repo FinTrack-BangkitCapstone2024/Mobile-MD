@@ -40,7 +40,15 @@
     <string name="yes">Yes</string>
     <string name="i_don_t_have_financial_recording_data">I don\'t have financial recording data</string>
     <string name="no">No</string>
-
+    <string name="good_morning">Good Morning!</string>
+    <string name="plut_kupie">Plut Kupie</string>
+    <string name="balance">Balance</string>
+    <string name="count_money">Rp 1.000.000,00-</string>
+    <string name="pengeluaran">Pengeluaran</string>
+    <string name="money_pengeluaran">Rp 170,000</string>
+    <string name="pemasukkan">Pemasukkan</string>
+    <string name="Pemasukkan_money">Rp 200,000</string>
+    <!--    Main Activity-->
 
 
 </resources>

@@ -1,7 +1,369 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_marginTop="8dp"
+            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="250dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/profile_picture" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/welcomeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/cardView"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/inter"
+                android:letterSpacing="0.02"
+                android:text="@string/good_morning"
+                android:textSize="12sp"
+                tools:ignore="RelativeOverlap" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/welcomeText"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/cardView"
+                android:fontFamily="@font/inter_semibold"
+                android:letterSpacing="0.02"
+                android:text="@string/plut_kupie"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/btn_notif"
+                android:background="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="0dp"
+                android:contentDescription="@string/image"
+                android:src="@drawable/button_notif" />
+        </RelativeLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            app:strokeColor="#E9E9E9"
+            android:layout_height="wrap_content"
+            app:shapeAppearanceOverlay="@style/CustomCardShape"
+            android:backgroundTint="#E9E9E9"
+            android:layout_marginVertical="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="11dp"
+                    android:backgroundTint="#1F5E98"
+                    app:cardCornerRadius="20dp"
+                    app:strokeColor="#1F5E98">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textView4"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4dp"
+                            android:contentDescription="@string/image"
+                            android:src="@drawable/ic_hide_pass" />
+
+
+                        <LinearLayout
+                            android:id="@+id/balance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:orientation="horizontal"
+                            tools:ignore="RelativeOverlap,UseCompoundDrawables">
+
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="14dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="8dp"
+                                android:contentDescription="@string/image"
+                                android:src="@drawable/vector_balance" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="0dp"
+                                android:text="@string/balance"
+                                android:textColor="@color/white" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/balance"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/inter_semibold"
+                            android:letterSpacing="0"
+                            android:text="@string/count_money"
+                            android:textColor="@color/white"
+                            android:textSize="24sp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/add_input"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="16dp"
+                            app:cardBackgroundColor="#E2941E"
+                            app:cardCornerRadius="250dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:contentDescription="@string/image"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/vector_add" />
+                        </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="#12395D"
+                    app:cardCornerRadius="15dp"
+                    app:strokeColor="#12395D">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="16dp"
+                            android:contentDescription="@string/image"
+                            android:src="@drawable/arrow_left" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="16dp"
+                            android:contentDescription="@string/image"
+                            android:src="@drawable/line_8" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="16dp"
+                            android:contentDescription="@string/image"
+                            android:src="@drawable/arrow_bottom" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity=""
+                                android:text="@string/pengeluaran"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/pengeluaran"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_semibold"
+                                android:letterSpacing="0"
+                                android:text="@string/money_pengeluaran"
+                                android:textColor="@color/white"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity=""
+                                android:text="@string/pemasukkan"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/pemasukan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_semibold"
+                                android:letterSpacing="0"
+                                android:text="@string/Pemasukkan_money"
+                                android:textColor="@color/white"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="@color/white"
+                    app:cardCornerRadius="15dp"
+                    app:strokeColor="@color/white">
+
+
+                    <LinearLayout style="@style/CenterLinearLayoutStyle">
+                        <com.google.android.material.card.MaterialCardView
+                            style="@style/InnerCardViewStyle"
+                            android:backgroundTint="#205E98" />
+                        <com.google.android.material.card.MaterialCardView
+                            style="@style/InnerCardViewStyle"
+                            android:layout_marginHorizontal="8.5dp"
+                            android:backgroundTint="#05A6BE" />
+                        <com.google.android.material.card.MaterialCardView style="@style/InnerCardViewStyle">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#12395D"
+                                android:contentDescription="@string/image"
+                                android:src="@drawable/chart" />
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/transaksi_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="1dp"
+                        android:fontFamily="@font/inter_semibold"
+                        android:letterSpacing="0"
+                        android:text="Transaksi"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/transaksi_text"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="0dp"
+                        android:letterSpacing="0"
+                        android:text="Hari ini"
+                        android:textColor="#707070"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="1dp"
+                        android:fontFamily="@font/inter_semibold"
+                        android:letterSpacing="0"
+                        android:text="See All"
+                        android:textSize="14sp"
+                        android:textColor="#489FCD"
+                        tools:fontFamily="@font/inter_bold" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_below="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_transaksi"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:listitem="@layout/item_transaksi" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </RelativeLayout>
+
+
+
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+
+
+
+
+
+
+</ScrollView>
