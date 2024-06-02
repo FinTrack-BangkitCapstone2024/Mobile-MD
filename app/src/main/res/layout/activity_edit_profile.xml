@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ProfileActivity"
+    tools:ignore="ScrollViewCount">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="button back"
+        android:src="@drawable/vector_back_button"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="#38434D"
+        app:shapeAppearanceOverlay="@style/CustomCardShape">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/iv_profile"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginTop="40dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="250dp">
+
+                <ImageView
+                    android:id="@+id/iv_profile_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/profile_picture" />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <Button
+                android:id="@+id/btn_edit_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit Photo"
+                app:strokeColor="#727272"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="#1AFFFFFF"
+                />
+
+
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_marginTop="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                app:strokeColor="#727272"
+                app:cardCornerRadius="20dp"
+                android:backgroundTint="#334E4E61">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Business Name"
+                        android:textColor="#9EA5AA"
+                        android:fontFamily="@font/inter_semibold"
+                        />
+
+
+                    <com.example.fintrack_bangkitcapstone2024.Component.CvName
+                        android:id="@+id/cv_name_business"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.02"
+                        android:layout_marginTop="5dp"
+                        android:textColorHint="#A9A9A9"
+                        android:background="@drawable/border_ed_edit_profile"
+                        android:hint="@string/enter_your_business_name" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text=" Email Address"
+                        android:layout_marginTop="11dp"
+                        android:textColor="#9EA5AA"
+                        android:fontFamily="@font/inter_semibold" />
+
+
+                    <com.example.fintrack_bangkitcapstone2024.Component.CvEmail
+                        android:id="@+id/cv_email_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.02"
+                        android:layout_marginTop="5dp"
+                        android:textColorHint="#A9A9A9"
+                        android:background="@drawable/border_ed_edit_profile"
+                        android:hint="Enter Your Address"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Business Addres"
+                        android:layout_marginTop="11dp"
+                        android:textColor="#9EA5AA"
+                        android:fontFamily="@font/inter_semibold" />
+
+                    <com.example.fintrack_bangkitcapstone2024.Component.CvName
+                    android:id="@+id/cv_Address_Business"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.02"
+                    android:layout_marginTop="5dp"
+                    android:textColorHint="#A9A9A9"
+                    android:background="@drawable/border_ed_edit_profile"
+                    android:hint="Enter Your Business Addres" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Type Of Business"
+                        android:layout_marginTop="11dp"
+                        android:textColor="#9EA5AA"
+                        android:fontFamily="@font/inter_semibold" />
+
+                    <com.example.fintrack_bangkitcapstone2024.Component.CvName
+                        android:id="@+id/Type_of_Business"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.02"
+                        android:layout_marginTop="5dp"
+                        android:textColorHint="#A9A9A9"
+                        android:background="@drawable/border_ed_edit_profile"
+                        android:hint="Enter Your Business Type" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Jenis"
+                        android:layout_marginTop="11dp"
+                        android:textColor="#9EA5AA"
+                        android:fontFamily="@font/inter_semibold" />
+
+                    <com.example.fintrack_bangkitcapstone2024.Component.CvName
+                        android:id="@+id/description_Business"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.02"
+                        android:layout_marginTop="5dp"
+                        android:textColorHint="#A9A9A9"
+                        android:background="@drawable/border_ed_edit_profile"
+                        android:hint="Enter Your Desctiption" />
+                </LinearLayout>
+
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <Button
+                android:id="@+id/save_changes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="38dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/inter"
+                android:background="@drawable/border_buttom"
+                app:backgroundTint="#788EAB"
+                android:text="Save Changes"/>
+
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    </LinearLayout>
+
+
+</ScrollView>

@@ -22,5 +22,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AddTransaksiActivity::class.java))
         }
 
+        binding.provfile.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
+
     }
 }
