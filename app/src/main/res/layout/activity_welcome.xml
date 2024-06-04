@@ -79,20 +79,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:fontFamily="@font/inter"
         android:layout_marginTop="16dp"
         android:background="@drawable/border_buttom"
-        app:backgroundTint="#2280FF"
-        android:text="Login"/>
-
-
-
-
-
-
-
-
-
+        android:fontFamily="@font/inter"
+        android:text="Sign Up"
+        app:backgroundTint="#2280FF" />
 
 
 </LinearLayout>

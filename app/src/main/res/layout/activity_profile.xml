@@ -114,7 +114,7 @@
                         app:iconTint="#C1C1CD"/>
 
                     <Button
-                        android:id="@+id/da"
+                        android:id="@+id/btn_logout"
                         android:textAlignment="textStart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

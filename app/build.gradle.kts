@@ -18,12 +18,16 @@ android {
     }
 
     buildTypes {
+        debug{
+            buildConfigField("String", "API_URL", "\"https://fintrack-424802.et.r.appspot.com/api/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "API_URL", "\"https://fintrack-424802.et.r.appspot.com/api/\"")
         }
     }
     compileOptions {
@@ -37,13 +41,15 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
-
+        buildConfig = true
     }
 }
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
+//    implementation (libs.androidx.core)
+    implementation("androidx.core:core-ktx:${libs.versions.coreKtx}")
+    implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
@@ -51,9 +57,20 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation (libs.material)
+    implementation(libs.androidx.viewpager2)
+    implementation(libs.material)
+    implementation(libs.mpandroidchart)
 
+    // api
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.logging.interceptor)
 
+    implementation (libs.androidx.datastore.preferences)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
 
-//    implementation (libs.design)
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
 }
+
+

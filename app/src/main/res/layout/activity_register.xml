@@ -78,7 +78,7 @@
             android:textSize="14sp"/>
 
         <com.example.fintrack_bangkitcapstone2024.Component.CvEmail
-            android:id="@+id/cv_login_register"
+            android:id="@+id/cv_email_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -128,6 +128,7 @@
             android:layout_marginTop="8dp" />
 
         <Button
+            android:id="@+id/btn_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="45dp"
@@ -153,12 +154,12 @@
                 android:text="@string/if_you_have_account"/>
 
             <TextView
-                android:id="@+id/btn_to_signin"
+                android:id="@+id/btn_to_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#159595"
                 android:fontFamily="@font/inter"
-                android:text="@string/sign_in"/>
+                android:text="Login"/>
         </LinearLayout>
 
 

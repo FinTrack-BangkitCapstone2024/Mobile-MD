@@ -48,7 +48,19 @@
     <string name="money_pengeluaran">Rp 170,000</string>
     <string name="pemasukkan">Pemasukkan</string>
     <string name="Pemasukkan_money">Rp 200,000</string>
-    <!--    Main Activity-->
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="tab_text_1">Pemasukkkan</string>
+    <string name="tab_text_2">Pengeluaran\n</string>
+    <string name="emptyEmail">Email cannot be empty</string>
+    <string name="emtyPassword">Password cannot be empty</string>
+    <string name="emtyPasswordConfirm">Confirm password cannot be empty</string>
+    <string name="makeSureData">Make sure data you fill All the data corrently</string>
+    <string name="data_correctly">Enter your account data correctly!</string>
+    <string name="logout">Logout</string>
+    <string name="confirm_logout">Are you sure you want to logout?</string>
+    <string name="cancel">Cancel</string>
+    <string name="logout_with_space">Log out</string>
+    <string name="logout_success">Logged out successfully</string>
 
 
 </resources>
