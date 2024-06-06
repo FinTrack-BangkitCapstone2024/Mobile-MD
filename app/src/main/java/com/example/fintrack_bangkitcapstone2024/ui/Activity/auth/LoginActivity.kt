@@ -1,4 +1,4 @@
-package com.example.fintrack_bangkitcapstone2024
+package com.example.fintrack_bangkitcapstone2024.ui.Activity.auth
 
 import android.content.Context
 import android.content.Intent
@@ -10,11 +10,13 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.fintrack_bangkitcapstone2024.R
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityLoginBinding
 import com.example.fintrack_bangkitcapstone2024.request.RequestLogin
+import com.example.fintrack_bangkitcapstone2024.ui.Activity.MainActivity
 import com.example.fintrack_bangkitcapstone2024.viewModel.AuthViewModel
-import com.example.fintrack_bangkitcapstone2024.viewModel.LoginUserViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
+import com.example.fintrack_bangkitcapstone2024.viewModel.UserViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.ViewModelFactory
 
 
@@ -31,8 +33,9 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val preferences = UserPreferences.getInstance(dataStore)
-        val loginUserViewModel =
-            ViewModelProvider(this, ViewModelFactory(preferences))[LoginUserViewModel::class.java]
+        val userViewModel =
+            ViewModelProvider(this, ViewModelFactory(preferences))[UserViewModel::class.java]
+
 
         binding.btnLogin.setOnClickListener {
             binding.cvEmailLogin.clearFocus()
@@ -50,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        loginUserViewModel.getLoginSession().observe(this) { session ->
+        userViewModel.getLoginSession().observe(this) { session ->
             if (session) {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -62,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
             handleLoginResponse(
                 authViewModel.isErrorLogin,
                 message,
-                loginUserViewModel
+                userViewModel
             )
         }
 
@@ -92,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
     private fun handleLoginResponse(
         isErrorLogin: Boolean,
         message: String,
-        userLoginViewModel: LoginUserViewModel
+        userLoginViewModel: UserViewModel
     ) {
         if (!isErrorLogin) {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -101,6 +104,9 @@ class LoginActivity : AppCompatActivity() {
                 userLoginViewModel.saveLoginSession(true)
                 userLoginViewModel.saveToken(dataUser.data.token.accessToken)
                 userLoginViewModel.saveName(dataUser.data.user.name)
+                userLoginViewModel.saveUserId(dataUser.data.user.id)
+                userLoginViewModel.saveEmail(dataUser.data.user.email)
+                userLoginViewModel.savePassword(dataUser.data.user.password)
             }
         } else {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

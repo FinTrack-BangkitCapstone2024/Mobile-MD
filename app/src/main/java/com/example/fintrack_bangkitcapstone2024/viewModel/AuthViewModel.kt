@@ -7,18 +7,26 @@ import androidx.lifecycle.ViewModel
 import com.example.fintrack_bangkitcapstone2024.Api.ApiConfig
 import com.example.fintrack_bangkitcapstone2024.request.RequestLogin
 import com.example.fintrack_bangkitcapstone2024.request.RequestRegister
+import com.example.fintrack_bangkitcapstone2024.request.RequestUpdate
 import com.example.fintrack_bangkitcapstone2024.response.ResponseLogin
 import com.example.fintrack_bangkitcapstone2024.response.ResponseRegister
+import com.example.fintrack_bangkitcapstone2024.response.User
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel: ViewModel() {
+
 
     private val _isLoadingLogin = MutableLiveData<Boolean>()
     val isLoadingLogin: LiveData<Boolean> = _isLoadingLogin
     private val _messageLogin = MutableLiveData<String>()
     val messageLogin: LiveData<String> = _messageLogin
     var isErrorLogin: Boolean = false
+
+    private val _currentUser = MutableLiveData<User?>()
+    val currentUser: MutableLiveData<User?> = _currentUser
+
 
     private val _userLogin = MutableLiveData<ResponseLogin>()
     val userLogin: LiveData<ResponseLogin> = _userLogin
@@ -28,6 +36,36 @@ class AuthViewModel : ViewModel() {
     val isLoading: LiveData<Boolean> = _isLoading
     private val _message = MutableLiveData<String>()
     val messageRegister: LiveData<String> = _message
+
+    private val _userUpdateResponse = MutableLiveData<ResponseRegister?>()
+    val userUpdateResponse: MutableLiveData<ResponseRegister?> = _userUpdateResponse
+
+
+    fun updateUser(id: String, requestUpdateUser: RequestUpdate) {
+        val api = ApiConfig.getApiService().updateUser(id, requestUpdateUser)
+        api.enqueue(object : Callback<ResponseRegister> {
+            override fun onResponse(
+                call: Call<ResponseRegister>,
+                response: Response<ResponseRegister>
+            ) {
+                if (response.isSuccessful) {
+                    _userUpdateResponse.value = response.body()
+                } else {
+                    _userUpdateResponse.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseRegister>, t: Throwable) {
+                _userUpdateResponse.value = null
+            }
+        })
+    }
+
+
+    fun logout() {
+        _currentUser.value = null
+    }
+
 
     fun getResponseRegister(registerUser: RequestRegister) {
         _isLoading.value = true
@@ -73,6 +111,7 @@ class AuthViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     isErrorLogin = false
                     _userLogin.value = responseBody!!
+                    _currentUser.value = responseBody.data.user // Update currentUser
                     _messageLogin.value = "Halo ${_userLogin.value!!.data.user.name}!"
                 } else {
                     isErrorLogin = true

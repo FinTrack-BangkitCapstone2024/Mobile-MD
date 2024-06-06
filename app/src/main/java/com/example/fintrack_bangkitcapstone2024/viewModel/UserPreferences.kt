@@ -23,16 +23,9 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
-    fun getToken(): Flow<String> {
+    fun getPassword(): Flow<String> {
         return dataStore.data.map { preferences ->
-            preferences[TOKEN] ?: ""
-        }
-    }
-
-
-    suspend fun saveToken(token: String) {
-        dataStore.edit { preferences ->
-            preferences[TOKEN] = token
+            preferences[PASSWORD] ?: ""
         }
     }
 
@@ -49,6 +42,52 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    suspend fun savePassword(password: String) {
+        dataStore.edit { preferences ->
+            preferences[PASSWORD] = password
+        }
+    }
+
+
+    fun getUserId(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[USER_ID] ?: ""
+        }
+    }
+    fun getEmail(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[EMAIL] ?: ""
+        }
+    }
+
+    suspend fun saveEmail(email: String) {
+        dataStore.edit { preferences ->
+            preferences[EMAIL] = email
+        }
+    }
+
+    suspend fun saveUserId(userId: String) {
+        dataStore.edit { preferences ->
+            preferences[USER_ID] = userId
+        }
+    }
+
+
+    fun getToken(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[TOKEN] ?: ""
+        }
+    }
+
+
+
+
+    suspend fun saveToken(token: String) {
+        dataStore.edit { preferences ->
+            preferences[TOKEN] = token
+        }
+    }
+
     suspend fun clearDataLogin() {
         dataStore.edit { preferences ->
             preferences.remove(LOGIN_SESSION)
@@ -56,6 +95,9 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences.remove(NAME)
         }
     }
+
+
+
 
     companion object {
         @Volatile
@@ -72,6 +114,8 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         private val LOGIN_SESSION = booleanPreferencesKey("login_session")
         private val TOKEN = stringPreferencesKey("token")
         private val NAME = stringPreferencesKey("name")
-
+        private val USER_ID = stringPreferencesKey("user_id")
+        private val EMAIL = stringPreferencesKey("email")
+        private val PASSWORD = stringPreferencesKey("password")
     }
 }

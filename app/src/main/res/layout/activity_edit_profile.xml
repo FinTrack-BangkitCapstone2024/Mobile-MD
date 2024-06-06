@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ProfileActivity"
+    tools:context=".ui.Activity.profile.EditProfileActivity"
     tools:ignore="ScrollViewCount">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
     <ImageButton
@@ -31,7 +31,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -55,7 +55,7 @@
 
 
             <Button
-                android:id="@+id/btn_edit_profile"
+                android:id="@+id/btn_edit_photo_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Edit Photo"
@@ -69,7 +69,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 app:strokeColor="#727272"
@@ -86,21 +86,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:text="Business Name"
+                        android:text="Name"
                         android:textColor="#9EA5AA"
                         android:fontFamily="@font/inter_semibold"
                         />
 
 
-                    <com.example.fintrack_bangkitcapstone2024.Component.CvName
-                        android:id="@+id/cv_name_business"
+                    <EditText
+                        android:id="@+id/cv_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:letterSpacing="0.02"
                         android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
                         android:textColorHint="#A9A9A9"
                         android:background="@drawable/border_ed_edit_profile"
-                        android:hint="@string/enter_your_business_name" />
+                        android:hint="@string/enter_your_name" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -117,10 +118,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:letterSpacing="0.02"
+                        android:inputType="none"
+                        android:textColor="#A9A9A9"
                         android:layout_marginTop="5dp"
                         android:textColorHint="#A9A9A9"
                         android:background="@drawable/border_ed_edit_profile"
-                        android:hint="Enter Your Address"/>
+                        android:hint="@string/enter_your_email"/>
+
+                    <TextView
+                        android:id="@+id/nonEditableTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="#A9A9A9"
+                        android:textSize="12dp"
+                        android:text="Email tidak dapat diedit" />
+
 
 
                     <TextView
@@ -132,7 +145,7 @@
                         android:textColor="#9EA5AA"
                         android:fontFamily="@font/inter_semibold" />
 
-                    <com.example.fintrack_bangkitcapstone2024.Component.CvName
+                    <EditText
                     android:id="@+id/cv_Address_Business"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,44 +154,6 @@
                     android:textColorHint="#A9A9A9"
                     android:background="@drawable/border_ed_edit_profile"
                     android:hint="Enter Your Business Addres" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:text="Type Of Business"
-                        android:layout_marginTop="11dp"
-                        android:textColor="#9EA5AA"
-                        android:fontFamily="@font/inter_semibold" />
-
-                    <com.example.fintrack_bangkitcapstone2024.Component.CvName
-                        android:id="@+id/Type_of_Business"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:letterSpacing="0.02"
-                        android:layout_marginTop="5dp"
-                        android:textColorHint="#A9A9A9"
-                        android:background="@drawable/border_ed_edit_profile"
-                        android:hint="Enter Your Business Type" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:text="Jenis"
-                        android:layout_marginTop="11dp"
-                        android:textColor="#9EA5AA"
-                        android:fontFamily="@font/inter_semibold" />
-
-                    <com.example.fintrack_bangkitcapstone2024.Component.CvName
-                        android:id="@+id/description_Business"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:letterSpacing="0.02"
-                        android:layout_marginTop="5dp"
-                        android:textColorHint="#A9A9A9"
-                        android:background="@drawable/border_ed_edit_profile"
-                        android:hint="Enter Your Desctiption" />
                 </LinearLayout>
 
 
@@ -189,8 +164,8 @@
                 android:id="@+id/btn_save_changes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="38dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginTop="48dp"
                 android:layout_marginHorizontal="20dp"
                 android:fontFamily="@font/inter"
                 android:background="@drawable/border_buttom"
@@ -207,4 +182,4 @@
     </LinearLayout>
 
 
-</ScrollView>
+</LinearLayout>

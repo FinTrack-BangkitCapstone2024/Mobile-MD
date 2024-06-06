@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".ImportActivity">
+    tools:context=".ui.Activity.ImportActivity">
 
     <TextView
         android:id="@+id/textView"

@@ -1,4 +1,4 @@
-package com.example.fintrack_bangkitcapstone2024
+package com.example.fintrack_bangkitcapstone2024.ui.Activity.auth
 
 import android.content.Intent
 import android.os.Bundle

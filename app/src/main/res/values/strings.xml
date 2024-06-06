@@ -61,6 +61,8 @@
     <string name="cancel">Cancel</string>
     <string name="logout_with_space">Log out</string>
     <string name="logout_success">Logged out successfully</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

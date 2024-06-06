@@ -1,4 +1,4 @@
-package com.example.fintrack_bangkitcapstone2024
+package com.example.fintrack_bangkitcapstone2024.ui.Activity
 
 import android.os.Bundle
 import android.text.Editable

@@ -1,22 +1,25 @@
-package com.example.fintrack_bangkitcapstone2024
+package com.example.fintrack_bangkitcapstone2024.ui.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.example.fintrack_bangkitcapstone2024.databinding.ActivityReportBinding
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.fintrack_bangkitcapstone2024.databinding.FragmentReportMontlyBinding
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 
-class ReportActivity : AppCompatActivity() {
+class ReportMontlyFragment : Fragment() {
+    private lateinit var binding: FragmentReportMontlyBinding
 
-    private lateinit var binding: ActivityReportBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityReportBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
 
         val incomeEntries = listOf(
             BarEntry(0f, 6000f), // January
@@ -34,8 +37,8 @@ class ReportActivity : AppCompatActivity() {
             BarEntry(4f, 5000f)  // May
         )
 
-       val incomeDataSet = BarDataSet(incomeEntries, "Pemasukan").apply {
-        color = Color.parseColor("#7BAEDD") // Set color to red
+        val incomeDataSet = BarDataSet(incomeEntries, "Pemasukan").apply {
+            color = Color.parseColor("#7BAEDD") // Set color to red
         }
 
         val expenseDataSet = BarDataSet(expenseEntries, "Pengeluaran").apply {
@@ -48,7 +51,7 @@ class ReportActivity : AppCompatActivity() {
 
         binding.barChart.data = data
         binding.barChart.xAxis.apply {
-            valueFormatter = MonthValueFormatter()
+            valueFormatter = ReportMontlyFragment.MonthValueFormatter()
             position = XAxis.XAxisPosition.BOTTOM
             granularity = 1f
             setDrawGridLines(true) // Enable horizontal grid lines
@@ -82,4 +85,12 @@ class ReportActivity : AppCompatActivity() {
             return months.getOrNull(value.toInt()) ?: value.toString()
         }
     }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentReportMontlyBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
 }

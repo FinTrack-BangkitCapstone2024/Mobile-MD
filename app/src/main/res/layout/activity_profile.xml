@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ProfileActivity">
+    tools:context=".ui.Activity.profile.ProfileActivity">
 
     <ImageButton
         android:id="@+id/btn_back"
@@ -45,6 +45,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/profile_picture" />
             </androidx.cardview.widget.CardView>
+
             <TextView
                 android:id="@+id/tv_gmail_user"
                 android:layout_width="wrap_content"
@@ -52,10 +53,10 @@
                 android:layout_marginTop="10dp"
                 android:letterSpacing="0"
                 android:text="Ghufranbakrie@gmail.com"
-                android:textColor="#A2A2B5"/>
+                android:textColor="#A2A2B5" />
 
             <TextView
-                android:id="@+id/name_business"
+                android:id="@+id/name_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

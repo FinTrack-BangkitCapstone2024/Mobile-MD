@@ -1,4 +1,4 @@
-package com.example.fintrack_bangkitcapstone2024
+package com.example.fintrack_bangkitcapstone2024.ui.Activity.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,14 +6,15 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.fintrack_bangkitcapstone2024.R
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityRegisterBinding
 import com.example.fintrack_bangkitcapstone2024.request.RequestLogin
 import com.example.fintrack_bangkitcapstone2024.request.RequestRegister
+import com.example.fintrack_bangkitcapstone2024.ui.Activity.MainActivity
 import com.example.fintrack_bangkitcapstone2024.viewModel.AuthViewModel
-import com.example.fintrack_bangkitcapstone2024.viewModel.LoginUserViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
+import com.example.fintrack_bangkitcapstone2024.viewModel.UserViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.ViewModelFactory
-
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -83,7 +84,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupObserverViewModel() {
         Log.d("userLoginViewModel", "memasukan login")
-        val userLoginViewModel = ViewModelProvider(this, ViewModelFactory(UserPreferences.getInstance(dataStore)))[LoginUserViewModel::class.java]
+        val userLoginViewModel = ViewModelProvider(this, ViewModelFactory(UserPreferences.getInstance(dataStore)))[UserViewModel::class.java]
         userLoginViewModel.getLoginSession().observe(this) { sessionTrue ->
             if (sessionTrue) {
                 navigateToMainActivity()
@@ -100,15 +101,19 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun handleResponseLogin(isError: Boolean, message: String, loginUserViewModel: LoginUserViewModel) {
+    private fun handleResponseLogin(isError: Boolean, message: String, userViewModel: UserViewModel) {
         if (isError) {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         } else {
             val user = authViewModel.userLogin.value
             user?.let { dataUser ->
-                loginUserViewModel.saveLoginSession(true)
-                loginUserViewModel.saveToken(dataUser.data.token.accessToken)
-                loginUserViewModel.saveName(dataUser.data.user.name)
+                userViewModel.saveLoginSession(true)
+                userViewModel.saveToken(dataUser.data.token.accessToken)
+                userViewModel.saveName(dataUser.data.user.name)
+                userViewModel.saveUserId(dataUser.data.user.id)
+                userViewModel.saveEmail(dataUser.data.user.email)
+                userViewModel.savePassword(dataUser.data.user.password)
+
             }
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
