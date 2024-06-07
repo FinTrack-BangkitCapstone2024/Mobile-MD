@@ -23,6 +23,24 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    suspend fun savePengeluaran(pengeluaran: List<Int>) {
+        dataStore.edit { preferences ->
+            preferences[PENGELUARAN] = pengeluaran.joinToString(",")
+        }
+    }
+
+    suspend fun saveMasukan(masukan: List<Int>) {
+        dataStore.edit { preferences ->
+            preferences[MASUKAN] = masukan.joinToString(",")
+        }
+    }
+
+    suspend fun saveDay(day: List<String>) {
+        dataStore.edit { preferences ->
+            preferences[DAY] = day.joinToString(",")
+        }
+    }
+
     fun getPassword(): Flow<String> {
         return dataStore.data.map { preferences ->
             preferences[PASSWORD] ?: ""
@@ -54,6 +72,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences[USER_ID] ?: ""
         }
     }
+
     fun getEmail(): Flow<String> {
         return dataStore.data.map { preferences ->
             preferences[EMAIL] ?: ""
@@ -80,8 +99,6 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
     }
 
 
-
-
     suspend fun saveToken(token: String) {
         dataStore.edit { preferences ->
             preferences[TOKEN] = token
@@ -95,8 +112,6 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences.remove(NAME)
         }
     }
-
-
 
 
     companion object {
@@ -117,5 +132,9 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         private val USER_ID = stringPreferencesKey("user_id")
         private val EMAIL = stringPreferencesKey("email")
         private val PASSWORD = stringPreferencesKey("password")
+        private val PENGELUARAN = stringPreferencesKey("pengeluaran")
+        private val MASUKAN = stringPreferencesKey("masukan")
+        private val DAY = stringPreferencesKey("day")
+
     }
 }

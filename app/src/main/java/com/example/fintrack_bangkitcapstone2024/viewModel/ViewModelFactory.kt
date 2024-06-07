@@ -8,9 +8,10 @@ class ViewModelFactory(private val pref: UserPreferences) :
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
-            return UserViewModel(pref) as T
+        return when {
+            modelClass.isAssignableFrom(UserViewModel::class.java) -> UserViewModel(pref) as T
+            modelClass.isAssignableFrom(WeeklyDataViewModel::class.java) -> WeeklyDataViewModel(pref) as T
+            else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
-        throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
 }

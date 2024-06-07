@@ -61,15 +61,15 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        authViewModel.messageLogin.observe(this) { message ->
+        authViewModel.message.observe(this) { message ->
             handleLoginResponse(
-                authViewModel.isErrorLogin,
+                authViewModel.isError,
                 message,
                 userViewModel
             )
         }
 
-        authViewModel.isLoadingLogin.observe(this, Observer<Boolean> { isLoading ->
+        authViewModel.isLoading.observe(this, Observer<Boolean> { isLoading ->
 //            if (isLoading) {
 //                // Tampilkan ProgressBar
 //                binding.progressBarLogin.visibility = View.VISIBLE

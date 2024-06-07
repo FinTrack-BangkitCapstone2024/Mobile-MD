@@ -3,45 +3,39 @@ package com.example.fintrack_bangkitcapstone2024.ui.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
-import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityAddTransaksiBinding
-import com.google.android.material.transition.platform.MaterialContainerTransform
-import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
+import com.example.fintrack_bangkitcapstone2024.request.RequestFinancials
+import com.example.fintrack_bangkitcapstone2024.viewModel.AuthViewModel
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AddTransaksiActivity : AppCompatActivity() {
     private var amount: Long = 100000
     private lateinit var binding: ActivityAddTransaksiBinding
+    private val authViewModel: AuthViewModel by lazy {
+        ViewModelProvider(this)[AuthViewModel::class.java]
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Enable Activity Transitions. Optionally enable Activity transitions in your
-        // theme with <item name=”android:windowActivityTransitions”>true</item>.
-        window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-
-        // Set the transition name, which matches Activity A’s start view transition name, on
-        // the root view.
-        findViewById<View>(android.R.id.content).transitionName = "shared_element_container"
-
-        // Attach a callback used to receive the shared elements from Activity A to be
-        // used by the container transform transition.
-        setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
-
-        // Set this Activity’s enter and return transition to a MaterialContainerTransform
-        window.sharedElementEnterTransition = MaterialContainerTransform().apply {
-            addTarget(android.R.id.content)
-            duration = 300L
-        }
-        window.sharedElementReturnTransition = MaterialContainerTransform().apply {
-            addTarget(android.R.id.content)
-            duration = 250L
-        }
-
         super.onCreate(savedInstanceState)
         binding = ActivityAddTransaksiBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnCreateTransaksi.setOnClickListener {
+            val requestFinancials = RequestFinancials(
+                jumlah = binding.tvCountTransaksi.text.toString(),
+                description = binding.descriptionTransaksi.editText?.text.toString(),
+                tanggal = convertDateToApiFormat(binding.dateTransakasi.editText?.text.toString()),
+                tipe = "pengeluaran",
+                usahaId = "vECigkVTb8RdoKslDMvq"
+            )
+            authViewModel.createFinancials(requestFinancials)
+        }
+
 
 
         binding.btnBack.setOnClickListener {
@@ -77,4 +71,12 @@ class AddTransaksiActivity : AppCompatActivity() {
     private fun updateAmountDisplay() {
         val formattedAmount = NumberFormat.getInstance(Locale("id", "ID")).format(amount)
         binding.tvCountTransaksi.setText("$formattedAmount")
-    }}
+    }
+
+    fun convertDateToApiFormat(date: String): String {
+        val inputFormat = SimpleDateFormat("ddMMyyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault())
+        val parsedDate = inputFormat.parse(date)
+        return outputFormat.format(parsedDate)
+    }
+}

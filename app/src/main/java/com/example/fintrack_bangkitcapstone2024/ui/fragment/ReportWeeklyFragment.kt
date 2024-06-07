@@ -2,12 +2,18 @@ package com.example.fintrack_bangkitcapstone2024.ui.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack_bangkitcapstone2024.R
 import com.example.fintrack_bangkitcapstone2024.databinding.FragmentReportWeeklyBinding
+import com.example.fintrack_bangkitcapstone2024.ui.Activity.auth.dataStore
+import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
+import com.example.fintrack_bangkitcapstone2024.viewModel.ViewModelFactory
+import com.example.fintrack_bangkitcapstone2024.viewModel.WeeklyDataViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -18,87 +24,92 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 class ReportWeeklyFragment : Fragment() {
 
     private lateinit var binding: FragmentReportWeeklyBinding
+    private lateinit var weeklyDataViewModel: WeeklyDataViewModel
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val barChart = view.findViewById<BarChart>(R.id.barChart)
 
-        val incomeEntries = listOf(
-            BarEntry(0f, 6000f), // Sunday
-            BarEntry(1f, 8000f), // Monday
-            BarEntry(2f, 5000f), // Tuesday
-            BarEntry(3f, 4000f), // Wednesday
-            BarEntry(4f, 7000f), // Thursday
-            BarEntry(5f, 8000f), // Friday
-            BarEntry(10f, 7000f)  // Saturday
-        )
+        // Get an instance of UserPreferences
+        val preferences = UserPreferences.getInstance(requireContext().dataStore)
 
-        val expenseEntries = listOf(
-            BarEntry(0f, 4000f), // Sunday
-            BarEntry(1f, 6000f), // Monday
-            BarEntry(2f, 6000f), // Tuesday
-            BarEntry(3f, 3000f), // Wednesday
-            BarEntry(4f, 5000f), // Thursday
-            BarEntry(5f, 6000f), // Friday
-            BarEntry(6f, 5000f)  // Saturday
-        )
+        Log.d("UserPreferences", "Data: ${preferences.toString()}")
 
-        val incomeDataSet = BarDataSet(incomeEntries, "Pemasukan").apply {
-            color = Color.parseColor("#7BAEDD") // Set color to red
-        }
+        // Get an instance of ViewModelFactory
+        val factory = ViewModelFactory(preferences)
 
-        val expenseDataSet = BarDataSet(expenseEntries, "Pengeluaran").apply {
-            color = Color.parseColor("#153C60") // Set color to blue
-        }
+        // Use ViewModelFactory to get an instance of WeeklyDataViewModel
+        weeklyDataViewModel = ViewModelProvider(this, factory).get(WeeklyDataViewModel::class.java)
 
-        val data = BarData(incomeDataSet, expenseDataSet).apply {
-            barWidth = 0.3f // set the width of each bar
-        }
+        weeklyDataViewModel = ViewModelProvider(this).get(WeeklyDataViewModel::class.java)
 
-        binding.barChart.data = data
-        binding.barChart.xAxis.apply {
-            valueFormatter = DayOfWeekValueFormatter()
-            position = XAxis.XAxisPosition.BOTTOM
-            granularity = 1f
-            setDrawGridLines(true) // Enable horizontal grid lines
-            gridColor = Color.LTGRAY // Set the color for the grid lines
-            enableGridDashedLine(10f, 10f, 0f) // Set the dashed line style
-        }
+        weeklyDataViewModel.fetchWeeklyData("vECigkVTb8RdoKslDMvq") // replace with your actual idUsaha
 
-        binding.barChart.axisLeft.apply {
-            setDrawGridLines(true) // Enable horizontal grid lines
-            axisMinimum = 0f
-            gridColor = Color.LTGRAY // Set the color for the grid lines
-            enableGridDashedLine(10f, 10f, 0f) // Set the dashed line style
-        }
+        weeklyDataViewModel.weeklyDataResponse.observe(viewLifecycleOwner, { response ->
+            if (response != null) {
+                val dataWeekly = response.data
+                val pengeluaran = dataWeekly.pengeluaran
+                val masukan = dataWeekly.masukan
+                val day = dataWeekly.day
 
-        binding.barChart.axisRight.apply {
-            setDrawGridLines(false) // Disable right Y-axis grid lines
-            isEnabled = false
-        }
+                val incomeEntries = mutableListOf<BarEntry>()
+                val expenseEntries = mutableListOf<BarEntry>()
 
-        binding.barChart.description.isEnabled = false
-        binding.barChart.legend.isEnabled = true
+                // Loop through each day
+                for (i in day.indices) {
+                    val currentDay = day[i]
+                    val currentPengeluaran = pengeluaran[i]
+                    val currentMasukan = masukan[i]
 
-        binding.barChart.groupBars(0f, 0.4f, 0.05f) // group bars together with a specified spacing
-        binding.barChart.invalidate() // refresh the chart
+                    // Add entries to the lists
+                    incomeEntries.add(BarEntry(i.toFloat(), currentMasukan.toFloat()))
+                    expenseEntries.add(BarEntry(i.toFloat(), currentPengeluaran.toFloat()))
+                }
+
+                val incomeDataSet = BarDataSet(incomeEntries, "Pemasukan").apply {
+                    color = Color.parseColor("#7BAEDD") // Set color to red
+                }
+
+                val expenseDataSet = BarDataSet(expenseEntries, "Pengeluaran").apply {
+                    color = Color.parseColor("#153C60") // Set color to blue
+                }
+
+                val data = BarData(incomeDataSet, expenseDataSet).apply {
+                    barWidth = 0.35f // set the width of each bar
+                    groupBars(-0.5f, 0.2f, 0.03f) // group bars together with a specified spacing
+                }
+
+                binding.barChart.data = data
+                binding.barChart.xAxis.apply {
+                    valueFormatter = DayOfWeekValueFormatter(day)
+                    position = XAxis.XAxisPosition.BOTTOM
+                    granularity = 1f
+                    setDrawGridLines(true) // Enable horizontal grid lines
+                    gridColor = Color.LTGRAY // Set the color for the grid lines
+                    enableGridDashedLine(10f, 10f, 0f) // Set the dashed line style
+                }
+
+                binding.barChart.invalidate() // refresh the chart
+            }
+            else {
+                Log.d("ReportWeeklyFragment", "Failed to fetch data")
+            }
+        })
     }
+        class DayOfWeekValueFormatter(private val daysOfWeek: List<String>) : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return daysOfWeek.getOrNull(value.toInt()) ?: value.toString()
+            }
+        }
 
-    class DayOfWeekValueFormatter : ValueFormatter() {
-        private val daysOfWeek = arrayOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-
-        override fun getFormattedValue(value: Float): String {
-            return daysOfWeek.getOrNull(value.toInt()) ?: value.toString()
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            // Inflate the layout for this fragment
+            binding = FragmentReportWeeklyBinding.inflate(inflater, container, false)
+            return binding.root
         }
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentReportWeeklyBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-}

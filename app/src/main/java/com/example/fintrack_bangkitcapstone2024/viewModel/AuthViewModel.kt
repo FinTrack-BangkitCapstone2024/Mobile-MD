@@ -5,9 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fintrack_bangkitcapstone2024.Api.ApiConfig
+import com.example.fintrack_bangkitcapstone2024.request.RequestFinancials
 import com.example.fintrack_bangkitcapstone2024.request.RequestLogin
 import com.example.fintrack_bangkitcapstone2024.request.RequestRegister
 import com.example.fintrack_bangkitcapstone2024.request.RequestUpdate
+import com.example.fintrack_bangkitcapstone2024.request.RequestUsaha
 import com.example.fintrack_bangkitcapstone2024.response.ResponseLogin
 import com.example.fintrack_bangkitcapstone2024.response.ResponseRegister
 import com.example.fintrack_bangkitcapstone2024.response.User
@@ -15,39 +17,83 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AuthViewModel: ViewModel() {
+class AuthViewModel : ViewModel() {
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _isLoadingLogin = MutableLiveData<Boolean>()
-    val isLoadingLogin: LiveData<Boolean> = _isLoadingLogin
-    private val _messageLogin = MutableLiveData<String>()
-    val messageLogin: LiveData<String> = _messageLogin
-    var isErrorLogin: Boolean = false
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
+
+    var isError: Boolean = false
 
     private val _currentUser = MutableLiveData<User?>()
-    val currentUser: MutableLiveData<User?> = _currentUser
-
+    val currentUser: LiveData<User?> = _currentUser
 
     private val _userLogin = MutableLiveData<ResponseLogin>()
     val userLogin: LiveData<ResponseLogin> = _userLogin
 
-    var isErrorRegist: Boolean = false
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
-    private val _message = MutableLiveData<String>()
-    val messageRegister: LiveData<String> = _message
-
     private val _userUpdateResponse = MutableLiveData<ResponseRegister?>()
-    val userUpdateResponse: MutableLiveData<ResponseRegister?> = _userUpdateResponse
+    val userUpdateResponse: LiveData<ResponseRegister?> = _userUpdateResponse
 
+    private fun handleResponse(
+        response: Response<ResponseRegister>,
+        successMessage: String
+    ) {
+        _isLoading.value = false
+        if (response.isSuccessful) {
+            isError = false
+            _userUpdateResponse.value = response.body()
+            _message.value = successMessage
+        } else {
+            isError = true
+            when (response.code()) {
+                400 -> _message.value = "Bad request"
+                408 -> _message.value = "Your internet connection is slow, please try again"
+                500 -> _message.value = "An error occurred, please try again"
+                else -> Log.d("Response code", response.message())
+            }
+        }
+    }
+
+    private fun handleFailure(t: Throwable) {
+        _isLoading.value = false
+        isError = true
+        _message.value = "Error message: " + t.message.toString()
+    }
+
+    fun createUsaha(requestUsaha: RequestUsaha) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().getUsaha(requestUsaha)
+        api.enqueue(object : Callback<ResponseRegister> {
+            override fun onResponse(call: Call<ResponseRegister>, response: Response<ResponseRegister>) {
+                handleResponse(response, "Usaha request has been successfully created")
+            }
+
+            override fun onFailure(call: Call<ResponseRegister>, t: Throwable) {
+                handleFailure(t)
+            }
+        })
+    }
+
+    fun createFinancials(requestFinancials: RequestFinancials) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().addFinancialData(requestFinancials)
+        api.enqueue(object : Callback<ResponseRegister> {
+            override fun onResponse(call: Call<ResponseRegister>, response: Response<ResponseRegister>) {
+                handleResponse(response, "Financial request has been successfully created")
+            }
+
+            override fun onFailure(call: Call<ResponseRegister>, t: Throwable) {
+                handleFailure(t)
+            }
+        })
+    }
 
     fun updateUser(id: String, requestUpdateUser: RequestUpdate) {
         val api = ApiConfig.getApiService().updateUser(id, requestUpdateUser)
         api.enqueue(object : Callback<ResponseRegister> {
-            override fun onResponse(
-                call: Call<ResponseRegister>,
-                response: Response<ResponseRegister>
-            ) {
+            override fun onResponse(call: Call<ResponseRegister>, response: Response<ResponseRegister>) {
                 if (response.isSuccessful) {
                     _userUpdateResponse.value = response.body()
                 } else {
@@ -61,77 +107,44 @@ class AuthViewModel: ViewModel() {
         })
     }
 
-
-    fun logout() {
-        _currentUser.value = null
-    }
-
-
     fun getResponseRegister(registerUser: RequestRegister) {
         _isLoading.value = true
         val api = ApiConfig.getApiService().registerData(registerUser)
-        api.enqueue(object : retrofit2.Callback<ResponseRegister> {
-            override fun onResponse(
-                call: Call<ResponseRegister>,
-                response: Response<ResponseRegister>
-            ) {
-                _isLoading.value = false
-                if (response.code() == 201) {
-                    isErrorRegist = false
-                    _message.value = "Yes, the account has been successfully created"
-                } else {
-                    isErrorRegist = true
-                    when (response.code()) {
-                        400 -> _message.value = "Bad request"
-                        408 -> _message.value = "Your internet connection is slow, please try again"
-                        500 -> _message.value =
-                            "The email you entered is already registered, please use another email"
-
-                        else -> Log.d("respons code", response.message())
-                    }
-                }
+        api.enqueue(object : Callback<ResponseRegister> {
+            override fun onResponse(call: Call<ResponseRegister>, response: Response<ResponseRegister>) {
+                handleResponse(response, "The account has been successfully created")
             }
 
             override fun onFailure(call: Call<ResponseRegister>, t: Throwable) {
-                isErrorRegist = true
-                _isLoading.value = false
-                _message.value = "Error message2: " + t.message.toString()
+                handleFailure(t)
             }
         })
     }
 
     fun getResponseLogin(loginDataAccount: RequestLogin) {
-        _isLoadingLogin.value = true
+        _isLoading.value = true
         val api = ApiConfig.getApiService().loginUser(loginDataAccount)
-        api.enqueue(object : retrofit2.Callback<ResponseLogin> {
+        api.enqueue(object : Callback<ResponseLogin> {
             override fun onResponse(call: Call<ResponseLogin>, response: Response<ResponseLogin>) {
-                _isLoadingLogin.value = false
-                val responseBody = response.body()
-
+                _isLoading.value = false
                 if (response.isSuccessful) {
-                    isErrorLogin = false
-                    _userLogin.value = responseBody!!
-                    _currentUser.value = responseBody.data.user // Update currentUser
-                    _messageLogin.value = "Halo ${_userLogin.value!!.data.user.name}!"
+                    isError = false
+                    _userLogin.value = response.body()!!
+                    _currentUser.value = response.body()!!.data.user
+                    _message.value = "Halo ${_userLogin.value!!.data.user.name}!"
                 } else {
-                    isErrorLogin = true
+                    isError = true
                     when (response.code()) {
-                        200, 201 -> _messageLogin.value = "Register Berhasil"
-                        401 -> _messageLogin.value =
-                            "Email or password you entered is wrong, please try again"
-
-                        408 -> _messageLogin.value =
-                            "Your internet connection is slow, please try again"
-
-                        else -> _messageLogin.value = "Error message: ${response.message()}"
+                        200, 201 -> _message.value = "Register Berhasil"
+                        401 -> _message.value = "Email or password you entered is wrong, please try again"
+                        408 -> _message.value = "Your internet connection is slow, please try again"
+                        else -> _message.value = "Error message: ${response.message()}"
                     }
                 }
             }
 
             override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
-                isErrorLogin = true
-                _isLoadingLogin.value = false
-                _messageLogin.value = "Error message2: " + t.message.toString()
+                handleFailure(t)
             }
         })
     }

@@ -143,7 +143,7 @@ class EditProfileActivity : AppCompatActivity() {
         val builder = MaterialAlertDialogBuilder(this)
             .setView(dialogView)
             .setPositiveButton("Go To Home") { _, _ ->
-                startActivity(Intent(this, ProfileActivity::class.java))
+               finish()
             }
         builder.show()
     }

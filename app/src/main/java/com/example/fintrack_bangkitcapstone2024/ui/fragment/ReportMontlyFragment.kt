@@ -19,8 +19,6 @@ class ReportMontlyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         val incomeEntries = listOf(
             BarEntry(0f, 6000f), // January
             BarEntry(1f, 8000f), // February

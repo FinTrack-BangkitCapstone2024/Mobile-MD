@@ -10,7 +10,7 @@ import com.example.fintrack_bangkitcapstone2024.R
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityRegisterBinding
 import com.example.fintrack_bangkitcapstone2024.request.RequestLogin
 import com.example.fintrack_bangkitcapstone2024.request.RequestRegister
-import com.example.fintrack_bangkitcapstone2024.ui.Activity.MainActivity
+import com.example.fintrack_bangkitcapstone2024.ui.Activity.CreateBusinessActivity
 import com.example.fintrack_bangkitcapstone2024.viewModel.AuthViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserViewModel
@@ -90,12 +90,12 @@ class RegisterActivity : AppCompatActivity() {
                 navigateToMainActivity()
             }
         }
-        authViewModel.messageRegister.observe(this) { regist ->
-            handleResponseRegister(authViewModel.isErrorRegist, regist)
+        authViewModel.message.observe(this) { regist ->
+            handleResponseRegister(authViewModel.isError, regist)
         }
 
-        authViewModel.messageLogin.observe(this) { login ->
-            handleResponseLogin(authViewModel.isErrorLogin, login, userLoginViewModel)
+        authViewModel.message.observe(this) { login ->
+            handleResponseLogin(authViewModel.isError, login, userLoginViewModel)
         }
 
 
@@ -146,7 +146,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
     private fun navigateToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, CreateBusinessActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
