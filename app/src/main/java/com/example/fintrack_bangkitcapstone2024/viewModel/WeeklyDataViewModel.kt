@@ -1,5 +1,6 @@
 package com.example.fintrack_bangkitcapstone2024.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,6 +34,7 @@ class WeeklyDataViewModel(private val userPreferences: UserPreferences) : ViewMo
                             userPreferences.saveMasukan(data.masukan)
                             userPreferences.saveDay(data.day)
                         }
+                        Log.d("WeeklyDataViewModel", "Data saved to DataStore${userPreferences.getMasukan()}, ${userPreferences.getPengeluaran()}, ${userPreferences.getDay()}, ${userPreferences.getMasukan()}")
                     }
                 } else {
                     _weeklyDataResponse.value = null

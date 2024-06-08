@@ -127,7 +127,7 @@
         android:fontFamily="@font/inter"
         android:background="@drawable/border_buttom"
         app:backgroundTint="@color/black"
-        android:text="@string/skip"/>
+        android:text="skip"/>
 
 
 </LinearLayout>

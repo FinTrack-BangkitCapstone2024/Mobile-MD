@@ -41,6 +41,24 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    fun getPengeluaran(): Flow<List<Int>> {
+        return dataStore.data.map { preferences ->
+            preferences[PENGELUARAN]?.split(",")?.map { it.toInt() } ?: listOf()
+        }
+    }
+
+    fun getMasukan(): Flow<List<Int>> {
+        return dataStore.data.map { preferences ->
+            preferences[MASUKAN]?.split(",")?.map { it.toInt() } ?: listOf()
+        }
+    }
+
+    fun getDay(): Flow<List<String>> {
+        return dataStore.data.map { preferences ->
+            preferences[DAY]?.split(",") ?: listOf()
+        }
+    }
+
     fun getPassword(): Flow<String> {
         return dataStore.data.map { preferences ->
             preferences[PASSWORD] ?: ""
@@ -110,6 +128,9 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences.remove(LOGIN_SESSION)
             preferences.remove(TOKEN)
             preferences.remove(NAME)
+            preferences.remove(USER_ID)
+            preferences.remove(EMAIL)
+
         }
     }
 
@@ -135,6 +156,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         private val PENGELUARAN = stringPreferencesKey("pengeluaran")
         private val MASUKAN = stringPreferencesKey("masukan")
         private val DAY = stringPreferencesKey("day")
+
 
     }
 }

@@ -36,14 +36,17 @@ class CreateBusinessActivity : AppCompatActivity() {
 
 
         binding.btnCreateBusines.setOnClickListener{
-            val requestUsaha = RequestUsaha(
-                nama = binding.cvNameBusiness.text.toString(),
-                userId = userViewModel.getUserId().value.toString(),
-                lokasi = binding.cvLocationBusiness.text.toString(),
-                jenis = binding.cvTypeBusiness.text.toString(),
 
-            )
-            viewModel.createUsaha(requestUsaha)
+            userViewModel.getUserId().observe(this) {
+                val requestUsaha = RequestUsaha(
+                    nama = binding.cvNameBusiness.text.toString(),
+                    userId = it,
+                    lokasi = binding.cvLocationBusiness.text.toString(),
+                    jenis = binding.cvTypeBusiness.text.toString(),
+                )
+                viewModel.createUsaha(requestUsaha)
+            }
+
             showDialog()
         }
     }

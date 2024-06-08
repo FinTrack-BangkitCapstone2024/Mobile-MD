@@ -77,6 +77,9 @@ class UserViewModel(private val pref: UserPreferences) : ViewModel() {
         }
     }
 
+
+
+
     fun clearDataLogin() {
         viewModelScope.launch {
             pref.clearDataLogin()
