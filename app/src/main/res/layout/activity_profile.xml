@@ -115,6 +115,19 @@
                         app:iconTint="#C1C1CD"/>
 
                     <Button
+                        android:id="@+id/add_new_usaha"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#4B535C"
+                        android:text="Add Usaha"
+                        app:iconPadding="20dp"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:icon="@drawable/ic_change_password"
+                        app:iconTint="#C1C1CD"/>
+
+                    <Button
                         android:id="@+id/btn_logout"
                         android:textAlignment="textStart"
                         android:layout_width="match_parent"

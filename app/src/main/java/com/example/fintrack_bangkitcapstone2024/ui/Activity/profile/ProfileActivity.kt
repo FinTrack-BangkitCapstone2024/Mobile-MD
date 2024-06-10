@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack_bangkitcapstone2024.R
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityProfileBinding
+import com.example.fintrack_bangkitcapstone2024.ui.Activity.CreateBusinessActivity
 import com.example.fintrack_bangkitcapstone2024.ui.Activity.auth.WelcomeActivity
 import com.example.fintrack_bangkitcapstone2024.ui.Activity.auth.dataStore
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
@@ -30,6 +31,10 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.changePassword.setOnClickListener {
             startActivity(Intent(this, ChangePasswordActivity::class.java))
+        }
+
+        binding.addNewUsaha.setOnClickListener {
+            startActivity(Intent(this, CreateBusinessActivity::class.java))
         }
 
         // get email user

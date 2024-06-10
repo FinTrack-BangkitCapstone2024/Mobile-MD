@@ -11,6 +11,20 @@ import kotlinx.coroutines.flow.map
 
 class UserPreferences private constructor(private val dataStore: DataStore<Preferences>) {
 
+
+    // usaha id
+    suspend fun saveUsahaId(usahaId: String) {
+        dataStore.edit { preferences ->
+            preferences[USAHA_ID] = usahaId
+        }
+    }
+
+    fun getUsahaId(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[USAHA_ID] ?: ""
+        }
+    }
+
     fun getLoginSession(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
             preferences[LOGIN_SESSION] ?: false
@@ -28,6 +42,9 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences[PENGELUARAN] = pengeluaran.joinToString(",")
         }
     }
+
+
+
 
     suspend fun saveMasukan(masukan: List<Int>) {
         dataStore.edit { preferences ->
@@ -91,6 +108,8 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+
+
     fun getEmail(): Flow<String> {
         return dataStore.data.map { preferences ->
             preferences[EMAIL] ?: ""
@@ -130,6 +149,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences.remove(NAME)
             preferences.remove(USER_ID)
             preferences.remove(EMAIL)
+            preferences.remove(PASSWORD)
 
         }
     }
@@ -156,6 +176,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         private val PENGELUARAN = stringPreferencesKey("pengeluaran")
         private val MASUKAN = stringPreferencesKey("masukan")
         private val DAY = stringPreferencesKey("day")
+        private val USAHA_ID = stringPreferencesKey("usaha_id")
 
 
     }

@@ -21,6 +21,17 @@ class UserViewModel(private val pref: UserPreferences) : ViewModel() {
     }
 
 
+    fun saveUsahaId(usahaId: String) {
+        viewModelScope.launch {
+            pref.saveUsahaId(usahaId)
+        }
+    }
+
+    fun getUsahaId(): LiveData<String> {
+        return pref.getUsahaId().asLiveData()
+    }
+
+
     fun getUserId(): LiveData<String> {
         return pref.getUserId().asLiveData()
     }
@@ -30,6 +41,7 @@ class UserViewModel(private val pref: UserPreferences) : ViewModel() {
             pref.saveUserId(userId)
         }
     }
+
 
     fun getToken(): LiveData<String> {
         return pref.getToken().asLiveData()
@@ -76,8 +88,6 @@ class UserViewModel(private val pref: UserPreferences) : ViewModel() {
             pref.saveName(name)
         }
     }
-
-
 
 
     fun clearDataLogin() {

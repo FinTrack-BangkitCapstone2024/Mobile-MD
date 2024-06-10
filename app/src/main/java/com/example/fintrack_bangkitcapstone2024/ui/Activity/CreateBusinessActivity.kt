@@ -2,9 +2,12 @@ package com.example.fintrack_bangkitcapstone2024.ui.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.transition.TransitionManager
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityCreateBusinessBinding
@@ -24,7 +27,6 @@ class CreateBusinessActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateBusinessBinding
     private val viewModel: AuthViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateBusinessBinding.inflate(layoutInflater)
@@ -34,45 +36,85 @@ class CreateBusinessActivity : AppCompatActivity() {
         val userViewModel =
             ViewModelProvider(this, ViewModelFactory(preferences))[UserViewModel::class.java]
 
-
-        binding.btnCreateBusines.setOnClickListener{
-
-            userViewModel.getUserId().observe(this) {
+        userViewModel.getUserId().observe(this) { userId ->
+            binding.btnCreateBusines.setOnClickListener {
                 val requestUsaha = RequestUsaha(
                     nama = binding.cvNameBusiness.text.toString(),
-                    userId = it,
+                    userId = userId,
                     lokasi = binding.cvLocationBusiness.text.toString(),
                     jenis = binding.cvTypeBusiness.text.toString(),
                 )
                 viewModel.createUsaha(requestUsaha)
+                showDialog()
             }
-
-            showDialog()
         }
+        userViewModel.getUserId().observe(this) { userId ->
+            Log.d("CreateBusinessActivity", "User ID: $userId")
+        }
+
+        userViewModel.getUsahaId().observe(this) { usahaId ->
+            Log.d("CreateBusinessActivity", "Usaha ID: $usahaId")
+        }
+
+
+        viewModel.usahaId.observe(this, Observer { usahaId ->
+            Toast.makeText(this, "Usaha ID: $usahaId", Toast.LENGTH_LONG).show()
+            Log.d("Response", "Usaha ID: $usahaId") // Menambahkan log
+
+            userViewModel.saveUsahaId(usahaId)
+        })
+
+        viewModel.message.observe(this, Observer { message ->
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            Log.d("Response", "Message: $message") // Menambahkan log
+        })
+
+
     }
+
+
+//    private fun handleCreateBusinessResponse(
+//        isErrorBusinessCreation: Boolean,
+//        message: String,
+//        userViewModel: UserViewModel
+//    ) {
+//        if (!isErrorBusinessCreation) {
+//            val business = viewModel.usahaResponse.value
+//            business?.dataUsaha?.id?.let { dataBusiness ->
+//                userViewModel.saveUsahaId(dataBusiness)
+//                Toast.makeText(this, "Usaha ID: $dataBusiness", Toast.LENGTH_LONG).show()
+//                Log.d("CreateBusinessActivity", "Saved Usaha ID: ${dataBusiness}")
+//            }
+//        } else {
+//            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
 
     // buatkan funtion dialog yanng  didalamnnya memanggil dialog layout_custom_dialog dan menetapkannya  di tengah layar ActivityCreateBusinessBinding
     private fun showDialog() {
-    val materialFade = MaterialFade().apply {
-        duration = 150L
-    }
-    val dialog = MaterialAlertDialogBuilder(this)
-        .setTitle("IS YOUR BUSINESS NEW?")
-        .setMessage("Has your business been running for some time and has financial records?")
-        .setNegativeButton("No") { dialog, which ->
-            startActivity(Intent(this@CreateBusinessActivity, MainActivity::class.java))
+        val materialFade = MaterialFade().apply {
+            duration = 150L
         }
-        .setPositiveButton("Yes") { dialog, which ->
-            intent = Intent(this, ImportActivity::class.java)
-            startActivity(intent)
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle("IS YOUR BUSINESS NEW?")
+            .setMessage("Has your business been running for some time and has financial records?")
+            .setNegativeButton("No") { dialog, which ->
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+            .setPositiveButton("Yes") { dialog, which ->
+                intent = Intent(this, ImportActivity::class.java)
+                startActivity(intent)
+            }
+            .create()
+
+        dialog.setOnShowListener {
+            TransitionManager.beginDelayedTransition(
+                dialog.window?.decorView as ViewGroup,
+                materialFade
+            )
         }
-        .create()
 
-    dialog.setOnShowListener {
-        TransitionManager.beginDelayedTransition(dialog.window?.decorView as ViewGroup, materialFade)
+        dialog.show()
     }
-
-    dialog.show()
-}
 }

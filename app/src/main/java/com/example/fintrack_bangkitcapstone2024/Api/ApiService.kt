@@ -6,8 +6,10 @@ import com.example.fintrack_bangkitcapstone2024.request.RequestLogin
 import com.example.fintrack_bangkitcapstone2024.request.RequestRegister
 import com.example.fintrack_bangkitcapstone2024.request.RequestUpdate
 import com.example.fintrack_bangkitcapstone2024.request.RequestUsaha
+import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseFinancialData
 import com.example.fintrack_bangkitcapstone2024.response.ResponseLogin
 import com.example.fintrack_bangkitcapstone2024.response.ResponseRegister
+import com.example.fintrack_bangkitcapstone2024.response.Usaha.ResponseUsaha
 import com.example.fintrack_bangkitcapstone2024.response.dataResonse.ResponseWeekly
 import retrofit2.Call
 import retrofit2.http.Body
@@ -28,7 +30,12 @@ interface ApiService {
     fun addFinancialData(@Body requestRegister: RequestFinancials): Call<ResponseRegister>
 
     @POST("usaha/")
-    fun getUsaha(@Body requestRegister: RequestUsaha): Call<ResponseRegister>
+    fun getUsaha(@Body requestRegister: RequestUsaha): Call<ResponseUsaha>
+
+    @GET("usaha/{usahaId}/financial")
+    fun getFinancialDataFromUsaha(
+        @Path("usahaId") usahaId: String
+    ): Call<ResponseFinancialData>
 
     @PUT("users/{id}")
     fun updateUser(

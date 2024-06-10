@@ -1,133 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+
     android:background="@color/white"
     tools:context=".ui.Activity.ImportActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="14dp"
-        android:fontFamily="@font/inter_semibold"
-        android:letterSpacing="0.02"
-        android:text="@string/import_your_finance_report"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:textColor="#78828A"
-        android:text="@string/import_your_finance_report_if_you_have"
-        android:textSize="14sp" />
-
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_marginTop="25dp"
-        android:layout_height="300dp"
-        android:src="@drawable/ilustrator_import"
-        android:layout_marginBottom="25dp"
-        android:layout_gravity="center"
-        android:contentDescription="@string/image" />
-
-    <!--    card-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:background="@drawable/border_csv"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_marginTop="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:src="@drawable/logo_csv"
-            android:contentDescription="@string/logo_csv" />
-        
+
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:letterSpacing="0"
-            android:text="@string/drag_your_file_s_to_start_uploading"
-            android:layout_gravity="center"/>
+            android:layout_gravity="start"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/inter_semibold"
+            android:letterSpacing="0.02"
+            android:text="@string/import_your_finance_report"
+            android:textSize="24sp" />
 
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_gravity="start"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="25dp"
+                android:text="@string/import_your_finance_report_if_you_have"
+                android:textColor="#78828A"
+                android:textSize="14sp" />
+
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+
+            android:layout_marginBottom="25dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/ilustrator_import" />
+
+        <!--    card-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:background="@drawable/border_csv"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/logo_csv"
+                android:src="@drawable/logo_csv" />
+
+            <TextView
+                android:id="@+id/selected_file_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:letterSpacing="0"
+                android:text="@string/drag_your_file_s_to_start_uploading" />
+
+            <LinearLayout
+                android:id="@+id/show_or"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
 
                 android:orientation="horizontal">
+
                 <View
-                    android:layout_gravity="center"
                     android:layout_width="62dp"
                     android:layout_height="1dp"
-                    android:background="#9CA4AB"/>
+                    android:layout_gravity="center"
+                    android:background="#9CA4AB" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#9CA4AB"
+                    android:layout_marginHorizontal="8dp"
                     android:text="@string/or"
-                    android:layout_marginHorizontal="8dp"/>
+                    android:textColor="#9CA4AB" />
 
                 <View
-                    android:layout_gravity="center"
                     android:layout_width="62dp"
                     android:layout_height="1dp"
-                    android:background="#9CA4AB"/>
+                    android:layout_gravity="center"
+                    android:background="#9CA4AB" />
             </LinearLayout>
 
             <Button
-            android:id="@+id/choose_file"
+                android:id="@+id/choose_file"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/inter_semibold"
+                android:letterSpacing="0"
+                android:text="@string/choose_file"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:cornerRadius="8dp"
+                app:strokeColor="#1849D6" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/upload_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/border_buttom"
+            android:fontFamily="@font/inter"
+            android:text="@string/upload"
+            app:backgroundTint="@color/black" />
+
+
+        <TextView
+            android:id="@+id/btn_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?attr/materialButtonOutlinedStyle"
-            android:backgroundTint="@color/white"
-            android:text="@string/choose_file"
-            app:cornerRadius="8dp"
-            android:textSize="12sp"
-            android:layout_marginTop="4dp"
-            app:strokeColor="#1849D6"
-            android:letterSpacing="0"
-            android:textColor="@color/black"
-            android:fontFamily="@font/inter_semibold"
-            android:layout_gravity="center"/>
+            android:paddingHorizontal="20dp"
+            android:layout_marginVertical="8dp"
+            android:text="skip"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"/>
+
+
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:layout_marginHorizontal="20dp"
-        android:fontFamily="@font/inter"
-        android:background="@drawable/border_buttom"
-        app:backgroundTint="@color/black"
-        android:text="@string/upload"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="20dp"
-        android:fontFamily="@font/inter"
-        android:background="@drawable/border_buttom"
-        app:backgroundTint="@color/black"
-        android:text="skip"/>
-
-
-</LinearLayout>
+</ScrollView>

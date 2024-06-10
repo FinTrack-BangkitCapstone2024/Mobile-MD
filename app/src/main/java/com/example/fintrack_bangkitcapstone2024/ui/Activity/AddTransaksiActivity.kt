@@ -7,7 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityAddTransaksiBinding
 import com.example.fintrack_bangkitcapstone2024.request.RequestFinancials
+import com.example.fintrack_bangkitcapstone2024.ui.Activity.auth.dataStore
 import com.example.fintrack_bangkitcapstone2024.viewModel.AuthViewModel
+import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
+import com.example.fintrack_bangkitcapstone2024.viewModel.UserViewModel
+import com.example.fintrack_bangkitcapstone2024.viewModel.ViewModelFactory
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -19,11 +23,21 @@ class AddTransaksiActivity : AppCompatActivity() {
         ViewModelProvider(this)[AuthViewModel::class.java]
     }
 
+    private var getUsahaIdtest: String = ""
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddTransaksiBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val preferences = UserPreferences.getInstance(dataStore)
+        val userViewModel =
+            ViewModelProvider(this, ViewModelFactory(preferences))[UserViewModel::class.java]
+        userViewModel.getUsahaId().observe(this) { usahaId ->
+            getUsahaIdtest = usahaId.toString()
+        }
 
         binding.btnCreateTransaksi.setOnClickListener {
             val requestFinancials = RequestFinancials(
@@ -31,7 +45,7 @@ class AddTransaksiActivity : AppCompatActivity() {
                 description = binding.descriptionTransaksi.editText?.text.toString(),
                 tanggal = convertDateToApiFormat(binding.dateTransakasi.editText?.text.toString()),
                 tipe = "pengeluaran",
-                usahaId = "vECigkVTb8RdoKslDMvq"
+                usahaId = getUsahaIdtest
             )
             authViewModel.createFinancials(requestFinancials)
         }
