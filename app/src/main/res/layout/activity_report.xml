@@ -4,88 +4,343 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.Activity.ReportActivity">
 
-    <ImageButton
-        android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="button back"
-        android:src="@drawable/vector_back_button"
-        android:backgroundTint="@color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="30dp"/>
-
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card"
-        android:layout_width="match_parent"
-        app:strokeColor="#E9E9E9"
-        android:layout_height="wrap_content"
-        app:shapeAppearanceOverlay="@style/CustomCardShape"
-        android:backgroundTint="#E9E9E9"
-        android:layout_marginVertical="8dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:orientation="vertical">
+            android:contentDescription="button back"
+            android:src="@drawable/vector_back_button"
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"/>
 
-            <RelativeLayout
+    <com.amar.library.ui.StickyScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            app:strokeColor="@color/white"
+            android:layout_height="wrap_content"
+            app:shapeAppearanceOverlay="@style/CustomCardShape"
+            android:backgroundTint="@color/white"
+            android:layout_marginVertical="8dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
-
-                <TextView
-                    android:id="@+id/font"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="14dp"
-                    android:letterSpacing="0"
-                    android:text="Report"
-                    android:textSize="24sp" />
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="0dp"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
 
-                    <include
-                        layout="@layout/tab_layout"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintEnd_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/font"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="14dp"
+                        android:letterSpacing="0"
+                        android:text="Report"
+                        android:textSize="24sp" />
+
+                    <RelativeLayout
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="0dp"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <include
+                            layout="@layout/tab_layout"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </RelativeLayout>
+
+
 
                 </RelativeLayout>
 
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    app:strokeColor="#E9E9E9"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="30dp"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="2dp"
+                    android:layout_marginVertical="8dp">
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp" />
+                </com.google.android.material.card.MaterialCardView>
 
 
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="21sp"
+                    android:letterSpacing="0"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Profit"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hari ini"
+                    android:letterSpacing="0"
+                    android:textSize="16sp" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    app:strokeColor="#E9E9E9"
+                    android:layout_height="75dp"
+                    android:layout_marginTop="7dp"
+                    app:cardCornerRadius="8dp"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="2dp"
+                    android:layout_marginBottom="7dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:paddingHorizontal="12dp"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageView5"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_left_" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_toEndOf="@+id/imageView5"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_semibold"
+                                android:text="Pendapatan"
+                                android:textSize="16sp"
+                                android:letterSpacing="0" />
+
+                            <TextView
+                                android:id="@+id/tv_income_profit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:letterSpacing="0"
+                                android:text="Rp 170,000"
+                                android:textColor="#707070"/>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/plus_profit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_semibold"
+                                android:text="+20,000"
+                                android:textColor="#3AB400"
+                                android:textSize="20sp"
+                                android:letterSpacing="0" />
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/cardView"
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="end"
+                                app:cardCornerRadius="8dp"
+                                android:backgroundTint="#E3E3E3"
+                                android:layout_marginBottom="2dp"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:letterSpacing="0"
+                                    android:layout_marginHorizontal="3dp"
+                                    android:text="+16%"
+                                    android:textColor="#097400"/>
+
+                            </com.google.android.material.card.MaterialCardView>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    app:strokeColor="#E9E9E9"
+                    android:layout_height="75dp"
+                    app:cardCornerRadius="8dp"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="2dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:paddingHorizontal="12dp"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_left__3_" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_toEndOf="@+id/imageView6"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_semibold"
+                                android:text="Pendapatan"
+                                android:textSize="16sp"
+                                android:letterSpacing="0" />
+
+                            <TextView
+                                android:id="@+id/tv_expense_profit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:letterSpacing="0"
+                                android:text="Rp 170,000"
+                                android:textColor="#707070"/>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/add_expense_profit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_semibold"
+                                android:text="+20,000"
+                                android:textColor="#E25C5C"
+                                android:textSize="20sp"
+                                android:letterSpacing="0" />
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/id_persen_expense"
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="end"
+                                app:cardCornerRadius="8dp"
+                                android:backgroundTint="#E3E3E3"
+                                android:layout_marginBottom="2dp"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:letterSpacing="0"
+                                    android:layout_marginHorizontal="3dp"
+                                    android:text="+16%"
+                                    android:textColor="#BB0202"/>
+
+                            </com.google.android.material.card.MaterialCardView>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/transaksi_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="1dp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:letterSpacing="0"
+                    android:text="Transaksi"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/filter_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/transaksi_text"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="0dp"
+                    android:letterSpacing="0"
+                    android:layout_marginBottom="8dp"
+                    android:text="Hari ini"
+                    android:textColor="#707070"
+                    android:textSize="16sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/dropdown_menu"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginStart="120dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/transaksi_text"
+                    android:hint="Filter">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/dropdown_menu_items"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </RelativeLayout>
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                app:strokeColor="#E9E9E9"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="30dp"
-                android:backgroundTint="#FFFFFF"
-                android:layout_marginVertical="8dp">
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="300dp" />
-            </com.google.android.material.card.MaterialCardView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_below="@+id/textView5"
+                    android:id="@+id/rv_transaksi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_transaksi" />
 
 
 
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-
-</LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </com.amar.library.ui.StickyScrollView>
+    </LinearLayout>

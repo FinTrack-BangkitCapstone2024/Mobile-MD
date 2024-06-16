@@ -19,7 +19,7 @@
     <string name="enter_your_business_name">Enter Your Business Name</string>
     <string name="upload">Upload</string>
     <string name="import_your_finance_report">Import Your Finance Report</string>
-    <string name="import_your_finance_report_if_you_have">Import your finance report if you have</string>
+    <string name="import_your_finance_report_if_you_have">Import your finance report if you have, to input</string>
     <string name="logo_csv">logo_csv</string>
     <string name="drag_your_file_s_to_start_uploading">Drag your file(s) to start uploading</string>
     <string name="or">OR</string>

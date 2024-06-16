@@ -1,21 +1,27 @@
 package com.example.fintrack_bangkitcapstone2024.Api
 
-
 import com.example.fintrack_bangkitcapstone2024.request.RequestFinancials
 import com.example.fintrack_bangkitcapstone2024.request.RequestLogin
 import com.example.fintrack_bangkitcapstone2024.request.RequestRegister
 import com.example.fintrack_bangkitcapstone2024.request.RequestUpdate
 import com.example.fintrack_bangkitcapstone2024.request.RequestUsaha
+import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseAddFInancial
 import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseFinancialData
+import com.example.fintrack_bangkitcapstone2024.response.ResonseReport.ResponseDataAnalysis
 import com.example.fintrack_bangkitcapstone2024.response.ResponseLogin
 import com.example.fintrack_bangkitcapstone2024.response.ResponseRegister
+import com.example.fintrack_bangkitcapstone2024.response.Usaha.ResponseListUsahaById
 import com.example.fintrack_bangkitcapstone2024.response.Usaha.ResponseUsaha
-import com.example.fintrack_bangkitcapstone2024.response.dataResonse.ResponseWeekly
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 
@@ -26,16 +32,18 @@ interface ApiService {
     @POST("auth/signInWithEmail")
     fun loginUser(@Body requestLogin: RequestLogin): Call<ResponseLogin>
 
-    @POST("usaha/financial")
-    fun addFinancialData(@Body requestRegister: RequestFinancials): Call<ResponseRegister>
+    @POST("usaha/financial/")
+    fun addFinancialData(@Body requestRegister: RequestFinancials): Call<ResponseAddFInancial>
 
     @POST("usaha/")
     fun getUsaha(@Body requestRegister: RequestUsaha): Call<ResponseUsaha>
 
-    @GET("usaha/{usahaId}/financial")
-    fun getFinancialDataFromUsaha(
-        @Path("usahaId") usahaId: String
-    ): Call<ResponseFinancialData>
+    @Multipart
+    @POST("usaha/financial/csv")
+    fun uploadCsvFile(
+        @Part file: MultipartBody.Part,
+        @Part("usaha_id") usaha_id: RequestBody
+    ): Call<ResponseBody>
 
     @PUT("users/{id}")
     fun updateUser(
@@ -44,7 +52,20 @@ interface ApiService {
     ): Call<ResponseRegister>
 
 
-    @GET("usaha/{idUsaha}/weekly")
-    fun getWeeklyData(@Path("idUsaha") idUsaha: String): Call<ResponseWeekly>
+    @GET("usaha/{usaha_id}/financial")
+    fun getFinancialDataFromUsaha(
+        @Path("usaha_id") usahaId: String
+    ): Call<ResponseFinancialData>
+
+
+    @GET("usaha/{usaha_id}")
+    fun getUsahaById(@Path("usaha_id") usahaId: String): Call<ResponseUsaha>
+
+    @GET("usaha/{usahaId}/analysis")
+    fun getWeeklyData(@Path("usahaId") usahaId: String): Call<ResponseDataAnalysis>
+
+    @GET("usaha/owner/{id}")
+    fun getListUsahaByOwner(@Path("id") id: String): Call<ResponseListUsahaById>
+
 
 }

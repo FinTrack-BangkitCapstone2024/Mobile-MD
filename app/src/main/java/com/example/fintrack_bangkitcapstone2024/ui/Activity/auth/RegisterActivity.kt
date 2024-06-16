@@ -27,6 +27,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         supportActionBar?.hide()
         setupUI()
         setupObserverViewModel()
@@ -73,7 +74,7 @@ class RegisterActivity : AppCompatActivity() {
                     email = binding.cvEmailRegister.text.toString().trim()
                 )
                 authViewModel.getResponseRegister(dataRegister)
-                Log.d("dataRegister", "dataRegister.toString()")
+                Log.d("dataRegister", "$dataRegister")
 
             } else {
                 tampilkanErrorValidasi()

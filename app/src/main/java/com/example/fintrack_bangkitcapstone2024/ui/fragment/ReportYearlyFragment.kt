@@ -1,15 +1,18 @@
 package com.example.fintrack_bangkitcapstone2024.ui.fragment
 
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.fintrack_bangkitcapstone2024.R
+import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack_bangkitcapstone2024.databinding.FragmentReportYearlyBinding
+import com.example.fintrack_bangkitcapstone2024.ui.Activity.auth.dataStore
+import com.example.fintrack_bangkitcapstone2024.viewModel.AnalyzeDataViewModel
+import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
+import com.example.fintrack_bangkitcapstone2024.viewModel.ViewModelFactory
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -17,6 +20,7 @@ import com.github.mikephil.charting.data.LineDataSet
 class ReportYearlyFragment : Fragment() {
     private var _binding: FragmentReportYearlyBinding? = null
     private val binding get() = _binding!!
+    private lateinit var analyzeDataViewModel: AnalyzeDataViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,35 +32,77 @@ class ReportYearlyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-// Buat data untuk chart
-        val entries = ArrayList<Entry>()
-        entries.add(Entry(0f, 30f))
-        entries.add(Entry(1f, 80f))
-        entries.add(Entry(2f, 60f))
-        entries.add(Entry(3f, 50f))
-// dan seterusnya...
 
-// Buat LineDataSet dan LineData
-        val lineDataSet = LineDataSet(entries, "Data Set 1")
-        lineDataSet.color = Color.BLUE
-        lineDataSet.valueTextColor = Color.BLACK
-        lineDataSet.valueTextSize = 16f
+        // Get an instance of UserPreferences
+        val preferences = UserPreferences.getInstance(requireContext().dataStore)
 
-// Set shape di bawah garis
-        lineDataSet.setDrawFilled(true)
+        // Get an instance of ViewModelFactory
+        val factory = ViewModelFactory(preferences)
 
-// Gunakan gradien sebagai fill drawable
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            lineDataSet.fillDrawable = context?.let { ContextCompat.getDrawable(it, R.drawable.gradient_chart) }
-        } else {
-            lineDataSet.fillColor = Color.BLUE
+        // Use ViewModelFactory to get an instance of AnalyzeDataViewModel
+        analyzeDataViewModel =
+            ViewModelProvider(this, factory).get(AnalyzeDataViewModel::class.java)
+
+        analyzeDataViewModel.yearlyData.observe(viewLifecycleOwner) { yearlyData ->
+            if (yearlyData != null) {
+                val pengeluaran = yearlyData.pengeluaran
+                val masukan = yearlyData.masukan
+                val tahun = yearlyData.tahun
+
+                val incomeEntries = ArrayList<Entry>()
+                val expenseEntries = ArrayList<Entry>()
+
+                // Loop through each year
+                for (i in tahun?.indices ?: emptyList()) {
+                    val currentTahun = tahun?.get(i)
+                    val currentPengeluaran = pengeluaran?.get(i) ?: 0
+                    val currentMasukan = masukan?.get(i) ?: 0
+
+                    // Add entries to the lists
+                    incomeEntries.add(
+                        Entry(
+                            i.toFloat(),
+                            (currentMasukan as? String)?.toFloatOrNull() ?: 0f
+                        )
+                    )
+                    expenseEntries.add(
+                        Entry(
+                            i.toFloat(),
+                            (currentPengeluaran as? String)?.toFloatOrNull() ?: 0f
+                        )
+                    )
+                }
+
+                // Log the entries for debugging
+                Log.d("ReportYearlyFragment", "Income Entries: $incomeEntries")
+                Log.d("ReportYearlyFragment", "Expense Entries: $expenseEntries")
+
+                // Create LineDataSet and LineData
+                val incomeDataSet = LineDataSet(incomeEntries, "Pemasukan").apply {
+                    color = Color.BLUE
+                    valueTextColor = Color.BLACK
+                    valueTextSize = 16f
+                    setDrawFilled(true)
+                    fillColor = Color.BLUE
+                }
+
+                val expenseDataSet = LineDataSet(expenseEntries, "Pengeluaran").apply {
+                    color = Color.RED
+                    valueTextColor = Color.BLACK
+                    valueTextSize = 16f
+                    setDrawFilled(true)
+                    fillColor = Color.RED
+                }
+
+                val lineData = LineData(incomeDataSet, expenseDataSet)
+
+                // Set data to the chart
+                binding.lineChart.data = lineData
+                binding.lineChart.invalidate() // refresh chart
+            } else {
+                Log.d("ReportYearlyFragment", "Failed to fetch data")
+            }
         }
-
-        val lineData = LineData(lineDataSet)
-
-// Set data ke chart
-        binding.lineChart.data = lineData
-        binding.lineChart.invalidate() // refresh chart
     }
 
     override fun onDestroyView() {

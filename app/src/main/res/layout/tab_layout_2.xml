@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:padding="10dp">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/tab2_background">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/textSelected2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text=""
+                android:layout_weight="1"
+                android:background="@drawable/selected2_background"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text=""
+                android:layout_weight="1"/>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Pengeluaran"
+                android:textColor="#888888"
+                android:id="@+id/tab_pengeluaran"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tab_pemasukan"
+                android:text="Pemasukan"
+                android:textColor="#F3F3F3"
+                android:layout_weight="1"
+                android:gravity="center"/>
+
+
+
+        </LinearLayout>
+
+
+
+    </FrameLayout>
+
+
+</LinearLayout>

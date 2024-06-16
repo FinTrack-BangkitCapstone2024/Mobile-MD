@@ -65,7 +65,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
 
     private fun changePassword() {
-        val currentPassword = binding.cvCurrentPassword.text.toString()
+        val currentPassword = binding.cvCurrentPassword.toString()
         userViewModel.getPassword().observe(this, Observer {
             backUpPassword = it
         })

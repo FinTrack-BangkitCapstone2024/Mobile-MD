@@ -4,10 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseUsaha(
 
+	@field:SerializedName("code")
 	val code: Int,
 
+	@field:SerializedName("data")
 	val data: Data,
 
+	@field:SerializedName("status")
 	val status: String
 )
 
@@ -28,41 +31,41 @@ data class User(
 
 data class Data(
 
-//	@field:SerializedName("financials")
-//	val financials: List<FinancialsItem>,
-//
-//	@field:SerializedName("balance")
-//	val balance: Int,
-//
-//	@field:SerializedName("nama")
-//	val nama: String,
-//
-//	@field:SerializedName("logo_path")
-//	val logoPath: String,
-//
-//	@field:SerializedName("lokasi")
-//	val lokasi: Lokasi,
-//
-//	@field:SerializedName("nama_usaha")
-//	val namaUsaha: String,
-//
-//	@field:SerializedName("jenis")
-//	val jenis: String,
+	@field:SerializedName("financials")
+	val financials: List<FinancialsItem>,
+
+	@field:SerializedName("total_pemasukan")
+	val totalPemasukan: Int,
+
+	@field:SerializedName("nama")
+	val nama: String,
+
+	@field:SerializedName("balance")
+	val balance: Int,
+
+	@field:SerializedName("logo_path")
+	val logoPath: String,
+
+	@field:SerializedName("lokasi")
+	val lokasi: String,
+
+	@field:SerializedName("jenis")
+	val jenis: String,
 
 	@field:SerializedName("id")
 	val id: String,
 
-//	@field:SerializedName("deskripsi")
-//	val deskripsi: String,
-//
-//	@field:SerializedName("user")
-//	val user: User
+	@field:SerializedName("total_pengeluaran")
+	val totalPengeluaran: Int,
+
+	@field:SerializedName("user")
+	val user: User
 )
 
 data class FinancialsItem(
 
 	@field:SerializedName("jumlah")
-	val jumlah: String,
+	val jumlah: Int,
 
 	@field:SerializedName("description")
 	val description: String,
@@ -78,19 +81,4 @@ data class FinancialsItem(
 
 	@field:SerializedName("usaha_id")
 	val usahaId: String
-)
-
-data class Lokasi(
-
-	@field:SerializedName("provinsi")
-	val provinsi: String,
-
-	@field:SerializedName("kota")
-	val kota: String,
-
-	@field:SerializedName("kecamatan")
-	val kecamatan: String,
-
-	@field:SerializedName("alamat")
-	val alamat: String
 )

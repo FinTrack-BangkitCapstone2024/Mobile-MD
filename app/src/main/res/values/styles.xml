@@ -13,11 +13,20 @@
 <!--    Main Activity-->
     <!-- Style untuk inner MaterialCardView -->
     <style name="InnerCardViewStyle">
-        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">100dp</item>
     </style>
 
-    <!-- Style untuk LinearLayout -->
+
+    <style name="MaterialDatePickerTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorSurface">@android:color/white</item>
+    </style>
+
+    <string-array name="dropdown_menu_items">
+        <item>Item 1</item>
+        <item>Item 2</item>
+        <item>Item 3</item>
+    </string-array>
 
 
 </resources>

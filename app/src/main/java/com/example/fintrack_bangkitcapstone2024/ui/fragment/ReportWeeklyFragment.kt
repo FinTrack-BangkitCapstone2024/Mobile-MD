@@ -1,6 +1,5 @@
 package com.example.fintrack_bangkitcapstone2024.ui.fragment
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,21 +10,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack_bangkitcapstone2024.R
 import com.example.fintrack_bangkitcapstone2024.databinding.FragmentReportWeeklyBinding
 import com.example.fintrack_bangkitcapstone2024.ui.Activity.auth.dataStore
+import com.example.fintrack_bangkitcapstone2024.viewModel.AnalyzeDataViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
+import com.example.fintrack_bangkitcapstone2024.viewModel.UserViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.ViewModelFactory
-import com.example.fintrack_bangkitcapstone2024.viewModel.WeeklyDataViewModel
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 
 class ReportWeeklyFragment : Fragment() {
 
     private lateinit var binding: FragmentReportWeeklyBinding
-    private lateinit var weeklyDataViewModel: WeeklyDataViewModel
-
+    private lateinit var weeklyDataViewModel: AnalyzeDataViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,81 +31,79 @@ class ReportWeeklyFragment : Fragment() {
         // Get an instance of UserPreferences
         val preferences = UserPreferences.getInstance(requireContext().dataStore)
 
-        Log.d("UserPreferences", "Data: ${preferences.toString()}")
-
         // Get an instance of ViewModelFactory
         val factory = ViewModelFactory(preferences)
 
-        // Use ViewModelFactory to get an instance of WeeklyDataViewModel
-        weeklyDataViewModel = ViewModelProvider(this, factory).get(WeeklyDataViewModel::class.java)
+        // Use ViewModelFactory to get an instance of AnalyzeDataViewModel
+        weeklyDataViewModel = ViewModelProvider(this, factory).get(AnalyzeDataViewModel::class.java)
 
-        weeklyDataViewModel = ViewModelProvider(this).get(WeeklyDataViewModel::class.java)
+        val userViewModel =
+            ViewModelProvider(this, ViewModelFactory(preferences))[UserViewModel::class.java]
 
-        weeklyDataViewModel.fetchWeeklyData("vECigkVTb8RdoKslDMvq") // replace with your actual idUsaha
+        userViewModel.getUsahaId().observe(viewLifecycleOwner) {
+            Log.d("ReportWeeklyFragment", "User ID: $it")
+            weeklyDataViewModel.fetchAnalizeData(it)
+        }
 
-        weeklyDataViewModel.weeklyDataResponse.observe(viewLifecycleOwner, { response ->
-            if (response != null) {
-                val dataWeekly = response.data
-                val pengeluaran = dataWeekly.pengeluaran
-                val masukan = dataWeekly.masukan
-                val day = dataWeekly.day
+        // Observe the weeklyData LiveData
+        weeklyDataViewModel.weeklyData.observe(viewLifecycleOwner) { weeklyData ->
+            if (weeklyData != null) {
+                Log.d("ReportWeeklyFragmentWeeklyData", "Weekly Data: $weeklyData")
+                val pengeluaran = weeklyData.pengeluaran
+                val masukan = weeklyData.masukan
+                val day = weeklyData.day
+
+                Log.d("ReportWeeklyFragmentPengluaran", "Pengeluaran: $pengeluaran")
+                Log.d("ReportWeeklyFragmentMasukan", "Masukan: $masukan")
 
                 val incomeEntries = mutableListOf<BarEntry>()
                 val expenseEntries = mutableListOf<BarEntry>()
 
                 // Loop through each day
-                for (i in day.indices) {
-                    val currentDay = day[i]
-                    val currentPengeluaran = pengeluaran[i]
-                    val currentMasukan = masukan[i]
+                for (i in day?.indices ?: emptyList()) {
+                    val currentDay = day?.get(i)
+                    val currentPengeluaran = pengeluaran?.get(i) ?: 0
+                    val currentMasukan = masukan?.get(i) ?: 0
+                    Log.d("ReportWeeklyFragment", "Day: $currentDay, Income: $currentMasukan, Expense: $currentPengeluaran")
 
                     // Add entries to the lists
-                    incomeEntries.add(BarEntry(i.toFloat(), currentMasukan.toFloat()))
-                    expenseEntries.add(BarEntry(i.toFloat(), currentPengeluaran.toFloat()))
+                    incomeEntries.add(
+                        BarEntry(
+                            i.toFloat(),
+                            (currentMasukan as? String)?.toFloatOrNull() ?: 0f
+                        )
+                    )
+                    expenseEntries.add(
+                        BarEntry(
+                            i.toFloat(),
+                            (currentPengeluaran as? String)?.toFloatOrNull() ?: 0f
+                        )
+                    )
                 }
 
-                val incomeDataSet = BarDataSet(incomeEntries, "Pemasukan").apply {
-                    color = Color.parseColor("#7BAEDD") // Set color to red
-                }
+                // Log the entries for debugging
+                Log.d("ReportWeeklyFragment", "Income Entries: $incomeEntries")
+                Log.d("ReportWeeklyFragment", "Expense Entries: $expenseEntries")
 
-                val expenseDataSet = BarDataSet(expenseEntries, "Pengeluaran").apply {
-                    color = Color.parseColor("#153C60") // Set color to blue
-                }
-
-                val data = BarData(incomeDataSet, expenseDataSet).apply {
-                    barWidth = 0.35f // set the width of each bar
-                    groupBars(-0.5f, 0.2f, 0.03f) // group bars together with a specified spacing
-                }
-
-                binding.barChart.data = data
-                binding.barChart.xAxis.apply {
-                    valueFormatter = DayOfWeekValueFormatter(day)
-                    position = XAxis.XAxisPosition.BOTTOM
-                    granularity = 1f
-                    setDrawGridLines(true) // Enable horizontal grid lines
-                    gridColor = Color.LTGRAY // Set the color for the grid lines
-                    enableGridDashedLine(10f, 10f, 0f) // Set the dashed line style
-                }
-
-                binding.barChart.invalidate() // refresh the chart
-            }
-            else {
+                // Rest of your code...
+            } else {
                 Log.d("ReportWeeklyFragment", "Failed to fetch data")
             }
-        })
-    }
-        class DayOfWeekValueFormatter(private val daysOfWeek: List<String>) : ValueFormatter() {
-            override fun getFormattedValue(value: Float): String {
-                return daysOfWeek.getOrNull(value.toInt()) ?: value.toString()
-            }
         }
+    }
 
-        override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-            // Inflate the layout for this fragment
-            binding = FragmentReportWeeklyBinding.inflate(inflater, container, false)
-            return binding.root
+    class DayOfWeekValueFormatter(private val daysOfWeek: List<String>) : ValueFormatter() {
+        override fun getFormattedValue(value: Float): String {
+            return daysOfWeek.getOrNull(value.toInt()) ?: value.toString()
         }
     }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        binding = FragmentReportWeeklyBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+}

@@ -10,21 +10,32 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.fintrack_bangkitcapstone2024.R
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityLoginBinding
 import com.example.fintrack_bangkitcapstone2024.request.RequestLogin
 import com.example.fintrack_bangkitcapstone2024.ui.Activity.MainActivity
 import com.example.fintrack_bangkitcapstone2024.viewModel.AuthViewModel
+import com.example.fintrack_bangkitcapstone2024.viewModel.UsahaViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.ViewModelFactory
 
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val authViewModel: AuthViewModel by lazy {
         ViewModelProvider(this)[AuthViewModel::class.java]
+    }
+    private val usahaViewModel: UsahaViewModel by lazy {
+        ViewModelProvider(this)[UsahaViewModel::class.java]
+    }
+
+    private lateinit var backUpUserId : String
+
+    private val preferences by lazy { UserPreferences.getInstance(dataStore) }
+    private val userViewModel by lazy {
+        ViewModelProvider(this, ViewModelFactory(preferences))[UserViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,15 +43,9 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val preferences = UserPreferences.getInstance(dataStore)
-        val userViewModel =
-            ViewModelProvider(this, ViewModelFactory(preferences))[UserViewModel::class.java]
 
 
         binding.btnLogin.setOnClickListener {
-            binding.cvEmailLogin.clearFocus()
-            binding.cvPassLogin.clearFocus()
-
             if (isDataValid()) {
                 val reqLogin = RequestLogin(
                     binding.cvPassLogin.text.toString().trim(),
@@ -48,9 +53,14 @@ class LoginActivity : AppCompatActivity() {
                 )
                 authViewModel.getResponseLogin(reqLogin)
             } else {
-                Toast.makeText(this, getString(R.string.data_correctly), Toast.LENGTH_SHORT)
-                    .show()
+                if (!binding.cvEmailLogin.isEmailValid) {
+                    binding.cvEmailLogin.error = "Email is not valid"
+                }
+                if (!binding.cvPassLogin.isPasswordValid) {
+                    binding.cvPassLogin.error = "Password is not valid"
+                }
             }
+
         }
 
         userViewModel.getLoginSession().observe(this) { session ->

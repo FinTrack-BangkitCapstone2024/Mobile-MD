@@ -71,6 +71,8 @@ dependencies {
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
 
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+
+    implementation ("com.github.amarjain07:StickyScrollView:1.0.3")
 }
 
 

@@ -1,14 +1,28 @@
 package com.example.fintrack_bangkitcapstone2024.ui.Activity
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import android.widget.Toolbar
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fintrack_bangkitcapstone2024.R
+import com.example.fintrack_bangkitcapstone2024.adapter.ItemTransaksiAdapter
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityReportBinding
+import com.example.fintrack_bangkitcapstone2024.ui.Activity.auth.dataStore
 import com.example.fintrack_bangkitcapstone2024.ui.fragment.ReportMontlyFragment
 import com.example.fintrack_bangkitcapstone2024.ui.fragment.ReportWeeklyFragment
 import com.example.fintrack_bangkitcapstone2024.ui.fragment.ReportYearlyFragment
+import com.example.fintrack_bangkitcapstone2024.viewModel.AuthViewModel
+import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
+import com.example.fintrack_bangkitcapstone2024.viewModel.UserViewModel
+import com.example.fintrack_bangkitcapstone2024.viewModel.ViewModelFactory
 
 class ReportActivity : AppCompatActivity() {
     lateinit var toolbar: Toolbar
@@ -18,7 +32,16 @@ class ReportActivity : AppCompatActivity() {
     lateinit var tab3: TextView
     lateinit var select: TextView
 
+    private lateinit var dropdownMenu: AutoCompleteTextView
+
+
+    private val authViewModel by lazy {
+        ViewModelProvider(this)[AuthViewModel::class.java]
+    }
+
     private lateinit var binding: ActivityReportBinding
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReportBinding.inflate(layoutInflater)
@@ -27,6 +50,31 @@ class ReportActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
+
+        val userLoginViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(UserPreferences.getInstance(dataStore))
+        )[UserViewModel::class.java]
+
+
+        userLoginViewModel.getUsahaId().observe(this) { usahId ->
+            Log.d("Response", "Usaha ID: $usahId")
+            authViewModel.getFinancialData(usahId)
+        }
+
+
+        authViewModel.financialData.observe(this, Observer { response ->
+            Log.d("MainActivity", "Response: $response")
+            response?.data?.let {
+                val adapter = ItemTransaksiAdapter(it.toMutableList())
+                binding.rvTransaksi.layoutManager = LinearLayoutManager(this)
+                binding.rvTransaksi.adapter = adapter
+
+                adapter.sortByAmountDescending()
+//                adapter.sortByAmountAscending()
+            }
+        })
+
 
         tab1 = findViewById(R.id.tab1)
         tab2 = findViewById(R.id.tab2)
@@ -37,6 +85,58 @@ class ReportActivity : AppCompatActivity() {
         val tab2 = findViewById<TextView>(R.id.tab2)
         val tab3 = findViewById<TextView>(R.id.tab3)
 
+
+        val dropdownMenu = findViewById<AutoCompleteTextView>(R.id.dropdown_menu_items)
+
+        val filterOptions =
+            arrayOf("Terbaru", "Terlama", "Terbesar", "Terkecil")
+
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, filterOptions)
+
+
+        dropdownMenu.setAdapter(adapter)
+
+        dropdownMenu.setOnItemClickListener { parent, view, position, id ->
+            val selectedItem = parent.getItemAtPosition(position).toString()
+
+            // Get the current adapter
+            val adapter = binding.rvTransaksi.adapter as? ItemTransaksiAdapter
+
+            // Perform action based on the selected item
+            when (selectedItem) {
+                "Terbaru" -> {
+                    // Sort by newest date
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        Log.d("Dropdown", "Sorting by newest date")
+                        adapter?.sortByDateDescending()
+                        binding.filterText.setText("Terbaru")
+
+                    }
+                }
+
+                "Terlama" -> {
+                    // Sort by oldest date
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        Log.d("Dropdown", "Sorting by oldest date")
+                        adapter?.sortByDateAscending()
+                        binding.filterText.setText("Terlama")
+                    }
+                }
+
+                "Terbesar" -> {
+                    // Sort by amount descending
+                    adapter?.sortByAmountDescending()
+                    binding.filterText.setText("Terbesar")
+                }
+
+                "Terkecil" -> {
+                    // Sort by amount ascending
+                    adapter?.sortByAmountAscending()
+                    binding.filterText.setText("Terkecil")
+                }
+            }
+        }
 
 
         val fragment1 = ReportWeeklyFragment()
@@ -85,5 +185,7 @@ class ReportActivity : AppCompatActivity() {
             fragmentTransaction.replace(R.id.fragment_container, fragment3)
             fragmentTransaction.commit()
         }
+
+
     }
 }

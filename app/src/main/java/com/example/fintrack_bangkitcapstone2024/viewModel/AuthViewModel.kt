@@ -10,6 +10,8 @@ import com.example.fintrack_bangkitcapstone2024.request.RequestLogin
 import com.example.fintrack_bangkitcapstone2024.request.RequestRegister
 import com.example.fintrack_bangkitcapstone2024.request.RequestUpdate
 import com.example.fintrack_bangkitcapstone2024.request.RequestUsaha
+import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseAddFInancial
+import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseFinancialData
 import com.example.fintrack_bangkitcapstone2024.response.ResponseLogin
 import com.example.fintrack_bangkitcapstone2024.response.ResponseRegister
 import com.example.fintrack_bangkitcapstone2024.response.Usaha.ResponseUsaha
@@ -27,6 +29,13 @@ class AuthViewModel : ViewModel() {
     val message: LiveData<String> = _message
 
     var isError: Boolean = false
+
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> = _errorMessage
+
+
+    private val _financialData = MutableLiveData<ResponseFinancialData>()
+    val financialData: LiveData<ResponseFinancialData> = _financialData
 
     private val _currentUser = MutableLiveData<User?>()
     val currentUser: LiveData<User?> = _currentUser
@@ -72,6 +81,61 @@ class AuthViewModel : ViewModel() {
         _message.value = "Error message: " + t.message.toString()
     }
 
+    fun getFinancialData(usahaId: String) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().getFinancialDataFromUsaha(usahaId)
+        api.enqueue(object : Callback<ResponseFinancialData> {
+            override fun onResponse(
+                call: Call<ResponseFinancialData>,
+                response: Response<ResponseFinancialData>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    _financialData.value = response.body()
+                } else {
+                    _errorMessage.value = "Error: ${response.code()}"
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseFinancialData>, t: Throwable) {
+                _isLoading.value = false
+                _errorMessage.value = t.message
+            }
+        })
+    }
+
+    fun getUsahaById(usahaId: String) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().getUsahaById(usahaId)
+        api.enqueue(object : Callback<ResponseUsaha> {
+            override fun onResponse(
+                call: Call<ResponseUsaha>,
+                response: Response<ResponseUsaha>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    isError = false
+                    _usahaResponse.value = response.body()
+                    _message.value = "Successfully fetched usaha data"
+                } else {
+                    isError = true
+                    when (response.code()) {
+                        400 -> _message.value = "Bad request"
+                        408 -> _message.value = "Your internet connection is slow, please try again"
+                        500 -> _message.value = "An error occurred, please try again"
+                        else -> Log.d("Response code", response.message())
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseUsaha>, t: Throwable) {
+                _isLoading.value = false
+                isError = true
+                _message.value = "Error message: " + t.message.toString()
+            }
+        })
+    }
+
     fun createUsaha(requestUsaha: RequestUsaha) {
         _isLoading.value = true
         val api = ApiConfig.getApiService().getUsaha(requestUsaha)
@@ -113,15 +177,27 @@ class AuthViewModel : ViewModel() {
     fun createFinancials(requestFinancials: RequestFinancials) {
         _isLoading.value = true
         val api = ApiConfig.getApiService().addFinancialData(requestFinancials)
-        api.enqueue(object : Callback<ResponseRegister> {
+        api.enqueue(object : Callback<ResponseAddFInancial> {
             override fun onResponse(
-                call: Call<ResponseRegister>,
-                response: Response<ResponseRegister>
+                call: Call<ResponseAddFInancial>,
+                response: Response<ResponseAddFInancial>
             ) {
-                handleResponse(response, "Financial request has been successfully created")
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    isError = false
+                    _message.value = "Financial request has been successfully created"
+                } else {
+                    isError = true
+                    when (response.code()) {
+                        400 -> _message.value = "Bad request"
+                        408 -> _message.value = "Your internet connection is slow, please try again"
+                        500 -> _message.value = "An error occurred, please try again"
+                        else -> Log.d("Response code", response.message())
+                    }
+                }
             }
 
-            override fun onFailure(call: Call<ResponseRegister>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseAddFInancial>, t: Throwable) {
                 handleFailure(t)
             }
         })

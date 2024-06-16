@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvNamaUsaha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama Usaha"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDeskripsiUsaha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNamaUsaha"
+        android:text="Deskripsi Usaha"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_tipe_usaha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Penjualan"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        />
+</RelativeLayout>

@@ -10,7 +10,7 @@ class ViewModelFactory(private val pref: UserPreferences) :
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(UserViewModel::class.java) -> UserViewModel(pref) as T
-            modelClass.isAssignableFrom(WeeklyDataViewModel::class.java) -> WeeklyDataViewModel(pref) as T
+            modelClass.isAssignableFrom(AnalyzeDataViewModel::class.java) -> AnalyzeDataViewModel(pref) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

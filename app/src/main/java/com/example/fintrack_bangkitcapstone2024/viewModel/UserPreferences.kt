@@ -19,6 +19,8 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+
+
     fun getUsahaId(): Flow<String> {
         return dataStore.data.map { preferences ->
             preferences[USAHA_ID] ?: ""
@@ -42,8 +44,6 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences[PENGELUARAN] = pengeluaran.joinToString(",")
         }
     }
-
-
 
 
     suspend fun saveMasukan(masukan: List<Int>) {
@@ -109,7 +109,6 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
     }
 
 
-
     fun getEmail(): Flow<String> {
         return dataStore.data.map { preferences ->
             preferences[EMAIL] ?: ""
@@ -150,7 +149,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences.remove(USER_ID)
             preferences.remove(EMAIL)
             preferences.remove(PASSWORD)
-
+            preferences.remove(USAHA_ID)
         }
     }
 

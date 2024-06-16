@@ -54,6 +54,7 @@ android:orientation="vertical">
             android:layout_marginStart="20dp"
             android:textSize="14sp"/>
 
+
         <com.example.fintrack_bangkitcapstone2024.Component.CvEmail
             android:id="@+id/cv_email_login"
             android:layout_width="match_parent"

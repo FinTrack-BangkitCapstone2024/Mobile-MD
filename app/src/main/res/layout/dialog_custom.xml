@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="222dp"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -34,5 +35,17 @@
         android:textAlignment="center"
         android:text="Awesome, you’ve successfully updated your profile"
         android:textAppearance="?attr/textAppearanceBody1" />
+
+
+    <Button
+        android:id="@+id/go_to_home"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:text="Go to Home"
+        android:textSize="10sp"
+        android:background="@drawable/border_buttom"
+        app:backgroundTint="#377CC8"
+        android:layout_marginTop="19dp"/>
+
 
 </LinearLayout>
