@@ -7,6 +7,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -59,15 +60,8 @@ class EditProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnEditPhotoProfile.setOnClickListener {
-            MaterialAlertDialogBuilder(this)
-                .setTitle("Choose photo from")
-                .setItems(arrayOf("Camera", "Gallery")) { _, which ->
-                    when (which) {
-                        0 -> openCamera()
-                        1 -> openGallery()
-                    }
-                }
-                .show()
+            // make toast coming soon
+            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
         }
 
         userViewModel.getName().observe(this) {

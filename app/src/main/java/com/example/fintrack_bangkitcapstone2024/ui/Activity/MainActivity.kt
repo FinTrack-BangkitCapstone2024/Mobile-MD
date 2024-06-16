@@ -1,5 +1,6 @@
 package com.example.fintrack_bangkitcapstone2024.ui.Activity
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -11,10 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.fintrack_bangkitcapstone2024.R
 import com.example.fintrack_bangkitcapstone2024.adapter.ItemTransaksiAdapter
-import com.example.fintrack_bangkitcapstone2024.adapter.UsahaAdapter
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityMainBinding
 import com.example.fintrack_bangkitcapstone2024.ui.Activity.auth.dataStore
 import com.example.fintrack_bangkitcapstone2024.ui.Activity.profile.ProfileActivity
@@ -147,21 +146,29 @@ class MainActivity : AppCompatActivity() {
 
         usahaViewModel.listUsaha.observe(this, Observer { response ->
             if (response != null && !isFinishing) {
-                // If the response is not null, show the dialog with the list of Usaha
-                dialog = Dialog(this)
-                dialog?.setContentView(R.layout.dialog_list_usaha)
-                val recyclerView: RecyclerView =
-                    dialog?.findViewById(R.id.recyclerViewUsaha) as RecyclerView
-                recyclerView.layoutManager = LinearLayoutManager(this)
-                recyclerView.adapter = UsahaAdapter(response.data.usaha) { chosenUsahaId ->
-                    // Close the dialog
-                    dialog?.dismiss()
-                    // Save the selected Usaha ID
-                    userViewModel.saveUsahaId(chosenUsahaId)
-                }
-                dialog?.show()
-            } else {
-                Toast.makeText(this, "No data available", Toast.LENGTH_SHORT).show()
+                // If the response is not null, create an AlertDialog with a list of Usaha
+                val usahaNames = response.data.usaha.map { it.nama }.toTypedArray()
+                var checkedItem = 0 // This will be the index of the selected radio button
+
+                val dialog = AlertDialog.Builder(this)
+                    .setTitle("Choose Usaha")
+                    .setSingleChoiceItems(usahaNames, checkedItem) { _, which ->
+                        // Update the index of the checked item when a radio button is clicked
+                        checkedItem = which
+                    }
+                    .setPositiveButton("OK") { _, _ ->
+                        // Save the ID of the selected Usaha when the OK button is clicked
+                        val chosenUsahaId = response.data.usaha[checkedItem].id
+                        userViewModel.saveUsahaId(chosenUsahaId)
+                        Toast.makeText(this, "Usaha berhasil Digantikan menjadi ${response.data.usaha[checkedItem].nama}", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, MainActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                        startActivity(intent)
+                    }
+                    .create()
+
+                dialog.show()
             }
         })
     }

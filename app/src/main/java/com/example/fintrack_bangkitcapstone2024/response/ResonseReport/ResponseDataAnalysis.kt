@@ -58,6 +58,6 @@ data class Monthly(
 	@field:SerializedName("masukan")
 	val masukan: List<Int>,
 
-	@field:SerializedName("bulan")
-	val bulan: List<String>
+	@field:SerializedName("tanggal")
+	val tanggal: List<String>
 )

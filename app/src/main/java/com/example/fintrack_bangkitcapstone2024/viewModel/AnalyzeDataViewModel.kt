@@ -45,7 +45,7 @@ class AnalyzeDataViewModel(private val userPreferences: UserPreferences) : ViewM
                     _weeklyData.value = response.body()?.data?.weekly
                     Log.d(
                         "AnalyzeDataViewModel",
-                        "Data saved to LiveData${_yearlyData.value}, ${_monthlyData.value}, ${_weeklyData.value}"
+                        "Data saved to LiveData${_yearlyData.value},\n ${_monthlyData.value},\n ${_weeklyData.value}"
                     )
 
                     // Save the data to DataStore
