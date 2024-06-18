@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_bkg"
     app:cardCornerRadius="4dp">
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginHorizontal="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -21,9 +25,236 @@
             android:textSize="26sp"/>
 
 
+        <ImageButton
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_close"
+            android:background="@color/white"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            />
+
+
     </RelativeLayout>
 
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
 
 
-</com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        app:cardCornerRadius="20dp"
+        app:strokeColor="#E8E8E8"
+        android:backgroundTint="#FCFCFD"
+        android:layout_marginHorizontal="20dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:strokeColor="@color/black"
+            android:paddingVertical="8dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="8dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title:"
+                    android:fontFamily="@font/inter_semibold"
+                    android:textColor="#757C8E"
+                    android:letterSpacing="0"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/title_transaksi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jualan kopi"
+                    android:textSize="16sp"
+                    android:letterSpacing="0"
+                    android:fontFamily="@font/inter_semibold"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerColor="#E8E8E8"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="8dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="description:"
+                    android:fontFamily="@font/inter_semibold"
+                    android:textColor="#757C8E"
+                    android:letterSpacing="0"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/description_transaksi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pengeluaran beli barang"
+                    android:textSize="16sp"
+                    android:maxWidth="140dp"
+                    android:textAlignment="textEnd"
+                    android:letterSpacing="0"
+                    android:fontFamily="@font/inter_semibold"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerColor="#E8E8E8"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="8dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Amount:"
+                    android:fontFamily="@font/inter_semibold"
+                    android:textColor="#757C8E"
+                    android:letterSpacing="0"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/jumlah_transaksi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp 12.000"
+                    android:maxWidth="140dp"
+                    android:textSize="16sp"
+                    android:letterSpacing="0"
+                    android:fontFamily="@font/inter_semibold"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerColor="#E8E8E8"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="8dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date:"
+                    android:fontFamily="@font/inter_semibold"
+                    android:textColor="#757C8E"
+                    android:letterSpacing="0"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/tanggal_transaksi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2024-06-16"
+                    android:textSize="16sp"
+                    android:letterSpacing="0"
+                    android:fontFamily="@font/inter_semibold"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerColor="#E8E8E8"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginVertical="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_semibold"
+                    android:letterSpacing="0"
+                    android:text="Tipe"
+                    android:textColor="#757C8E"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tipe_transaksi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/inter_semibold"
+                    android:letterSpacing="0"
+                    android:text="Pemasukan"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerColor="#E8E8E8"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="8dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Id Transaktion"
+                    android:fontFamily="@font/inter_semibold"
+                    android:textColor="#757C8E"
+                    android:letterSpacing="0"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/id_transaksi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:letterSpacing="0"
+                    android:text="0TFjG0Npa1rQkvr3tqdw" />
+            </RelativeLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</LinearLayout>
 

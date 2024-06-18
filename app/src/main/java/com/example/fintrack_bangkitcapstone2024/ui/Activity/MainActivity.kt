@@ -128,6 +128,12 @@ class MainActivity : AppCompatActivity() {
         binding.btnToReport.setOnClickListener {
             startActivity(Intent(this, ReportActivity::class.java))
         }
+        binding.moveToReport.setOnClickListener {
+            startActivity(Intent(this, ReportActivity::class.java))
+        }
+        binding.btnToForcasting.setOnClickListener {
+            startActivity(Intent(this, ForcastingActivity::class.java))
+        }
 
     }
 

@@ -43,11 +43,10 @@
     <string name="good_morning">Good Morning!</string>
     <string name="plut_kupie">Plut Kupie</string>
     <string name="balance">Balance</string>
-    <string name="count_money">Rp 1.000.000,00-</string>
+    <string name="count_money">Rp 0,00-</string>
     <string name="pengeluaran">Pengeluaran</string>
-    <string name="money_pengeluaran">Rp 170,000</string>
+    <string name="money">Rp 0</string>
     <string name="pemasukkan">Pemasukkan</string>
-    <string name="Pemasukkan_money">Rp 200,000</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="tab_text_1">Pemasukkkan</string>
     <string name="tab_text_2">Pengeluaran\n</string>

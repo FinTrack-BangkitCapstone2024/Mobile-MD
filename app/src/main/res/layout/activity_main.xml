@@ -20,7 +20,6 @@
 
 
         <RelativeLayout
-            android:id="@+id/provfile"
             android:layout_marginTop="8dp"
             android:layout_marginVertical="20dp"
             android:layout_marginHorizontal="20dp"
@@ -68,14 +67,15 @@
                 android:textSize="16sp" />
 
             <ImageButton
-                android:id="@+id/btn_notif"
+                android:id="@+id/provfile"
                 android:background="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
+                android:paddingHorizontal="8dp"
                 android:layout_marginEnd="0dp"
                 android:contentDescription="@string/image"
-                android:src="@drawable/button_notif" />
+                android:src="@drawable/ic_setting" />
         </RelativeLayout>
 
 
@@ -233,7 +233,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/inter_semibold"
                                 android:letterSpacing="0"
-                                android:text="@string/money_pengeluaran"
+                                android:text="@string/money"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -287,7 +287,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/inter_semibold"
                                 android:letterSpacing="0"
-                                android:text="@string/Pemasukkan_money"
+                                android:text="@string/money"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -321,26 +321,22 @@
                             android:layout_marginHorizontal="4dp"
                             android:backgroundTint="#205E98" />
                         <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btn_to_forcasting"
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             app:cardCornerRadius="12dp"
                             android:layout_height="match_parent"
                             android:layout_marginHorizontal="4dp"
-                            android:backgroundTint="#05A6BE" />
+                            android:backgroundTint="#05A6BE" >
+                        </com.google.android.material.card.MaterialCardView>
                         <com.google.android.material.card.MaterialCardView
                             android:transitionName="btnTranskasi"
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:backgroundTint="#12395D"
                             app:cardCornerRadius="12dp"
                             android:layout_marginHorizontal="4dp">
-                            <ImageButton
-                                android:id="@+id/btn_to_report"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="#12395D"
-                                android:contentDescription="@string/image"
-                                android:src="@drawable/chart" />
                         </com.google.android.material.card.MaterialCardView>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -353,6 +349,11 @@
                     android:orientation="horizontal"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="10dp">
+
+                    <RelativeLayout
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/transaksi_text"
@@ -381,22 +382,25 @@
 
 
                     <TextView
+                        android:id="@+id/move_to_report"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_alignParentEnd="true"
                         android:layout_gravity="start"
                         android:layout_marginTop="1dp"
                         android:fontFamily="@font/inter_semibold"
                         android:letterSpacing="0"
                         android:text="See All"
-                        android:textSize="14sp"
                         android:textColor="#489FCD"
+                        android:textSize="14sp"
                         tools:fontFamily="@font/inter_bold" />
+                    </RelativeLayout>
 
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_below="@+id/textView5"
+                        android:layout_below="@+id/title"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
