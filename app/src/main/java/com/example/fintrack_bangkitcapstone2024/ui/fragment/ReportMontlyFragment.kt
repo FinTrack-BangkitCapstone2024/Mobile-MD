@@ -44,6 +44,16 @@ class ReportMontlyFragment : Fragment() {
             monthlyDataViewModel.fetchAnalizeData(it)
         }
 
+        monthlyDataViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                binding.overlay.visibility = View.VISIBLE
+                binding.progressIndicatorReport.visibility = View.VISIBLE
+            } else {
+                binding.overlay.visibility = View.GONE
+                binding.progressIndicatorReport.visibility = View.GONE
+            }
+        }
+
         // Observe the monthlyData LiveData
         monthlyDataViewModel.monthlyData.observe(viewLifecycleOwner) { monthlyData ->
             if (monthlyData != null) {

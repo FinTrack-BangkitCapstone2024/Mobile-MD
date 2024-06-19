@@ -10,11 +10,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack_bangkitcapstone2024.R
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityEditProfileBinding
-import com.example.fintrack_bangkitcapstone2024.request.RequestUpdate
 import com.example.fintrack_bangkitcapstone2024.response.ResponseRegister
 import com.example.fintrack_bangkitcapstone2024.ui.Activity.auth.dataStore
 import com.example.fintrack_bangkitcapstone2024.viewModel.AuthViewModel
@@ -101,19 +99,10 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun updateUserProfile() {
-        userViewModel.getPassword().observe(this, Observer { password ->
             val newName = binding.cvName.text.toString()
-
-            // Save name to preferences
             userViewModel.saveName(newName)
 
-            // If new password is empty, return the previous password
-            val requestUpdateUser = RequestUpdate(
-                password = password,
-                name = newName
-            )
-            authViewModel.updateUser(userIdBackup, requestUpdateUser)
-        })
+            authViewModel.updateUser(id = userIdBackup,newName)
     }
 
     private fun handleUpdateResponse(response: ResponseRegister?) {

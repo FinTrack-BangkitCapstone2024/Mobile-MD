@@ -3,6 +3,7 @@ package com.example.fintrack_bangkitcapstone2024.ui.Activity
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
@@ -72,6 +73,16 @@ class ReportActivity : AppCompatActivity() {
 
                 adapter.sortByAmountDescending()
 //                adapter.sortByAmountAscending()
+            }
+        })
+
+        authViewModel.isLoading.observe(this, Observer { isLoading ->
+            if (isLoading) {
+                binding.overlay.visibility = View.VISIBLE
+                binding.progressIndicatorReport.visibility = View.VISIBLE
+            } else {
+                binding.overlay.visibility = View.GONE
+                binding.progressIndicatorReport.visibility = View.GONE
             }
         })
 
@@ -185,7 +196,5 @@ class ReportActivity : AppCompatActivity() {
             fragmentTransaction.replace(R.id.fragment_container, fragment3)
             fragmentTransaction.commit()
         }
-
-
     }
 }

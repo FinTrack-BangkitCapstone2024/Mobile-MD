@@ -15,7 +15,6 @@ import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.ViewModelFactory
 import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
@@ -44,6 +43,15 @@ class ReportWeeklyFragment : Fragment() {
         userViewModel.getUsahaId().observe(viewLifecycleOwner) {
             Log.d("ReportMontlyFragment", "User ID: $it")
             weeklyDataViewModel.fetchAnalizeData(it)
+        }
+        weeklyDataViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                binding.overlay.visibility = View.VISIBLE
+                binding.progressIndicatorReport.visibility = View.VISIBLE
+            } else {
+                binding.overlay.visibility = View.GONE
+                binding.progressIndicatorReport.visibility = View.GONE
+            }
         }
 
         // Observe the weeklyData LiveData

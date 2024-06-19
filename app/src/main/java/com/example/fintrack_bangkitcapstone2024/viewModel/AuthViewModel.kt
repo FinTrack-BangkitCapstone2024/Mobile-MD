@@ -8,7 +8,7 @@ import com.example.fintrack_bangkitcapstone2024.Api.ApiConfig
 import com.example.fintrack_bangkitcapstone2024.request.RequestFinancials
 import com.example.fintrack_bangkitcapstone2024.request.RequestLogin
 import com.example.fintrack_bangkitcapstone2024.request.RequestRegister
-import com.example.fintrack_bangkitcapstone2024.request.RequestUpdate
+import com.example.fintrack_bangkitcapstone2024.request.RequestUpdatePassword
 import com.example.fintrack_bangkitcapstone2024.request.RequestUsaha
 import com.example.fintrack_bangkitcapstone2024.response.Financial.DataForcasting
 import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseAddFInancial
@@ -21,6 +21,7 @@ import com.example.fintrack_bangkitcapstone2024.response.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class AuthViewModel : ViewModel() {
 
@@ -31,6 +32,10 @@ class AuthViewModel : ViewModel() {
     val message: LiveData<String> = _message
 
     var isError: Boolean = false
+
+    private val _isErrorBusines = MutableLiveData<Boolean>()
+    val isErrorBusines: LiveData<Boolean> = _isErrorBusines
+
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
@@ -83,7 +88,13 @@ class AuthViewModel : ViewModel() {
     private fun handleFailure(t: Throwable) {
         _isLoading.value = false
         isError = true
-        _message.value = "Error message: " + t.message.toString()
+        if (t is IOException) {
+            // This is a network failure or request cancellation
+            _errorMessage.value = "No connection"
+        } else {
+            // Unknown error occurred
+            _errorMessage.value = t.message
+        }
     }
 
     fun getDataForcasting(usahaId: String) {
@@ -94,12 +105,11 @@ class AuthViewModel : ViewModel() {
                 call: Call<ResponseForcasting>,
                 response: Response<ResponseForcasting>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
-                    _isLoading.value = false
                     _message.value = "Successfully fetched data"
                     _forcastingData.value = response.body()?.data
                 } else {
-                    _isLoading.value = false
                     _message.value = "Failed to fetch data: ${response.message()}"
                 }
             }
@@ -176,17 +186,12 @@ class AuthViewModel : ViewModel() {
             ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
-                    isError = false
+                    _isErrorBusines.value = false
                     _usahaResponse.value = response.body()
                     _message.value = "Usaha has been successfully created"
                     _usahaId.value = response.body()?.data?.id
-                    Log.d(
-                        "Response",
-                        "Full response: ${response.body()}"
-                    ) // Mencetak seluruh respons
-                    Log.d("Response", "Usaha ID: ${response.body()?.data?.id}") // Mencetak ID
                 } else {
-                    isError = true
+                    _isErrorBusines.value = true
                     when (response.code()) {
                         400 -> _message.value = "Bad request"
                         408 -> _message.value = "Your internet connection is slow, please try again"
@@ -198,7 +203,7 @@ class AuthViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ResponseUsaha>, t: Throwable) {
                 _isLoading.value = false
-                isError = true
+                _isErrorBusines.value = true
                 _message.value = "Error message: " + t.message.toString()
             }
         })
@@ -233,13 +238,15 @@ class AuthViewModel : ViewModel() {
         })
     }
 
-    fun updateUser(id: String, requestUpdateUser: RequestUpdate) {
-        val api = ApiConfig.getApiService().updateUser(id, requestUpdateUser)
+    fun updateUser(id: String, name:String ) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().updateUserDetails(id,name )
         api.enqueue(object : Callback<ResponseRegister> {
             override fun onResponse(
                 call: Call<ResponseRegister>,
                 response: Response<ResponseRegister>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     _userUpdateResponse.value = response.body()
                 } else {
@@ -248,6 +255,32 @@ class AuthViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<ResponseRegister>, t: Throwable) {
+                _isLoading.value = false
+                _userUpdateResponse.value = null
+            }
+        })
+    }
+
+    fun updatePassword(id: String, requestUpdatePassword: RequestUpdatePassword) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().updateUserPassword(id, requestUpdatePassword)
+        api.enqueue(object : Callback<ResponseRegister> {
+            override fun onResponse(
+                call: Call<ResponseRegister>,
+                response: Response<ResponseRegister>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    _userUpdateResponse.value = response.body()
+                    _message.value = response.message()
+                    Log.d("test","Update password response: ${_message}")
+                } else {
+                    _userUpdateResponse.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseRegister>, t: Throwable) {
+                _isLoading.value = false
                 _userUpdateResponse.value = null
             }
         })
@@ -289,6 +322,7 @@ class AuthViewModel : ViewModel() {
                             "Email or password you entered is wrong, please try again"
 
                         408 -> _message.value = "Your internet connection is slow, please try again"
+                        502 -> _message.value = "Bad Gateway"
                         else -> _message.value = "Error message: ${response.message()}"
                     }
                 }

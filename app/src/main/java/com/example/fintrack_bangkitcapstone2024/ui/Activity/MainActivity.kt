@@ -82,6 +82,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+
+
         authViewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (!errorMessage.isNullOrEmpty()) {
                 Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
@@ -131,7 +133,7 @@ class MainActivity : AppCompatActivity() {
         binding.moveToReport.setOnClickListener {
             startActivity(Intent(this, ReportActivity::class.java))
         }
-        binding.btnToForcasting.setOnClickListener {
+        binding.btnToForecasting.setOnClickListener {
             startActivity(Intent(this, ForcastingActivity::class.java))
         }
 
@@ -152,6 +154,8 @@ class MainActivity : AppCompatActivity() {
 
         usahaViewModel.listUsaha.observe(this, Observer { response ->
             if (response != null && !isFinishing) {
+                binding.overlay.visibility = View.VISIBLE
+                binding.progressIndicator.visibility = View.VISIBLE
                 // If the response is not null, create an AlertDialog with a list of Usaha
                 val usahaNames = response.data.usaha.map { it.nama }.toTypedArray()
                 var checkedItem = 0 // This will be the index of the selected radio button
@@ -175,6 +179,9 @@ class MainActivity : AppCompatActivity() {
                     .create()
 
                 dialog.show()
+                binding.overlay.visibility = View.GONE
+                binding.progressIndicator.visibility = View.GONE
+
             }
         })
     }

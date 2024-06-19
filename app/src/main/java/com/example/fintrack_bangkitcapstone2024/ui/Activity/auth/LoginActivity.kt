@@ -3,6 +3,7 @@ package com.example.fintrack_bangkitcapstone2024.ui.Activity.auth
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
@@ -79,15 +80,16 @@ class LoginActivity : AppCompatActivity() {
             )
         }
 
-        authViewModel.isLoading.observe(this, Observer<Boolean> { isLoading ->
-//            if (isLoading) {
-//                // Tampilkan ProgressBar
-//                binding.progressBarLogin.visibility = View.VISIBLE
-//            } else {
-//                // Sembunyikan ProgressBar
-//                binding.progressBarLogin.visibility = View.GONE
-//            }
+        authViewModel.isLoading.observe(this, Observer { isLoading ->
+            if (isLoading) {
+                binding.overlay.visibility = View.VISIBLE
+                binding.progressIndicator.visibility = View.VISIBLE
+            } else {
+                binding.overlay.visibility = View.GONE
+                binding.progressIndicator.visibility = View.GONE
+            }
         })
+
 
         binding.cvPassLogin.text?.let { binding.cvPassLogin.setSelection(it.length) }
 
@@ -116,7 +118,6 @@ class LoginActivity : AppCompatActivity() {
                 userLoginViewModel.saveName(dataUser.data.user.name)
                 userLoginViewModel.saveUserId(dataUser.data.user.id)
                 userLoginViewModel.saveEmail(dataUser.data.user.email)
-                userLoginViewModel.savePassword(dataUser.data.user.password)
             }
         } else {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

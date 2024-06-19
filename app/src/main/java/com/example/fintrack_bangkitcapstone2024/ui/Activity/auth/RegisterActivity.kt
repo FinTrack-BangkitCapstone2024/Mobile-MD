@@ -3,8 +3,10 @@ package com.example.fintrack_bangkitcapstone2024.ui.Activity.auth
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack_bangkitcapstone2024.R
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityRegisterBinding
@@ -31,6 +33,16 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setupUI()
         setupObserverViewModel()
+
+        authViewModel.isLoading.observe(this, Observer { isLoading ->
+            if (isLoading) {
+                binding.overlay.visibility = View.VISIBLE
+                binding.progressIndicator.visibility = View.VISIBLE
+            } else {
+                binding.overlay.visibility = View.GONE
+                binding.progressIndicator.visibility = View.GONE
+            }
+        })
 
     }
 
@@ -113,7 +125,6 @@ class RegisterActivity : AppCompatActivity() {
                 userViewModel.saveName(dataUser.data.user.name)
                 userViewModel.saveUserId(dataUser.data.user.id)
                 userViewModel.saveEmail(dataUser.data.user.email)
-                userViewModel.savePassword(dataUser.data.user.password)
 
             }
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

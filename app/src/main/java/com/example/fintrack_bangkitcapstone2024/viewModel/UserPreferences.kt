@@ -76,11 +76,6 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
-    fun getPassword(): Flow<String> {
-        return dataStore.data.map { preferences ->
-            preferences[PASSWORD] ?: ""
-        }
-    }
 
     fun getName(): Flow<String> {
         return dataStore.data.map { preferences ->
@@ -92,12 +87,6 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
     suspend fun saveName(name: String) {
         dataStore.edit { preferences ->
             preferences[NAME] = name
-        }
-    }
-
-    suspend fun savePassword(password: String) {
-        dataStore.edit { preferences ->
-            preferences[PASSWORD] = password
         }
     }
 
@@ -148,7 +137,6 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences.remove(NAME)
             preferences.remove(USER_ID)
             preferences.remove(EMAIL)
-            preferences.remove(PASSWORD)
             preferences.remove(USAHA_ID)
         }
     }
@@ -171,7 +159,6 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         private val NAME = stringPreferencesKey("name")
         private val USER_ID = stringPreferencesKey("user_id")
         private val EMAIL = stringPreferencesKey("email")
-        private val PASSWORD = stringPreferencesKey("password")
         private val PENGELUARAN = stringPreferencesKey("pengeluaran")
         private val MASUKAN = stringPreferencesKey("masukan")
         private val DAY = stringPreferencesKey("day")

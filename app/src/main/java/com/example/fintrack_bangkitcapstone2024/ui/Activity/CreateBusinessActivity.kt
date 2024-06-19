@@ -36,18 +36,30 @@ class CreateBusinessActivity : AppCompatActivity() {
         val userViewModel =
             ViewModelProvider(this, ViewModelFactory(preferences))[UserViewModel::class.java]
 
-        userViewModel.getUserId().observe(this) { userId ->
-            binding.btnCreateBusines.setOnClickListener {
-                val requestUsaha = RequestUsaha(
-                    nama = binding.cvNameBusiness.text.toString(),
-                    userId = userId,
-                    lokasi = binding.cvLocationBusiness.text.toString(),
-                    jenis = binding.cvTypeBusiness.text.toString(),
-                )
-                viewModel.createUsaha(requestUsaha)
-                showDialog()
+
+        if (viewModel.isError) {
+            Toast.makeText(this, viewModel.message.value, Toast.LENGTH_SHORT).show()
+        } else {
+            userViewModel.getUserId().observe(this) { userId ->
+                binding.btnCreateBusines.setOnClickListener {
+                    val requestUsaha = RequestUsaha(
+                        nama = binding.cvNameBusiness.text.toString(),
+                        userId = userId,
+                        lokasi = binding.cvLocationBusiness.text.toString(),
+                        jenis = binding.cvTypeBusiness.text.toString(),
+                    )
+                    viewModel.createUsaha(requestUsaha)
+                    viewModel.isErrorBusines.observe(this, Observer { isError ->
+                        if (!isError) {
+                            showDialog()
+                        }
+                    })
+                }
             }
         }
+
+
+
         userViewModel.getUserId().observe(this) { userId ->
             Log.d("CreateBusinessActivity", "User ID: $userId")
         }
@@ -71,25 +83,6 @@ class CreateBusinessActivity : AppCompatActivity() {
 
 
     }
-
-
-//    private fun handleCreateBusinessResponse(
-//        isErrorBusinessCreation: Boolean,
-//        message: String,
-//        userViewModel: UserViewModel
-//    ) {
-//        if (!isErrorBusinessCreation) {
-//            val business = viewModel.usahaResponse.value
-//            business?.dataUsaha?.id?.let { dataBusiness ->
-//                userViewModel.saveUsahaId(dataBusiness)
-//                Toast.makeText(this, "Usaha ID: $dataBusiness", Toast.LENGTH_LONG).show()
-//                Log.d("CreateBusinessActivity", "Saved Usaha ID: ${dataBusiness}")
-//            }
-//        } else {
-//            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-//        }
-//    }
-
 
     // buatkan funtion dialog yanng  didalamnnya memanggil dialog layout_custom_dialog dan menetapkannya  di tengah layar ActivityCreateBusinessBinding
     private fun showDialog() {

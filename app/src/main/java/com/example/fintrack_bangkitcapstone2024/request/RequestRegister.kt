@@ -6,7 +6,12 @@ data class RequestRegister(
 	val email: String
 )
 
-data class RequestUpdate(
-	val password: String,
-	val name: String,
+data class RequestUpdatePassword(
+	val old_password: String,
+	val new_password: String
+)
+
+data class RequestPasswordUpdate(
+	val old_password: String,
+	val new_password: String,
 )

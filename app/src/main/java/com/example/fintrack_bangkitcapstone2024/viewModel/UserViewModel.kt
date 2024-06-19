@@ -67,19 +67,9 @@ class UserViewModel(private val pref: UserPreferences) : ViewModel() {
         return pref.getName().asLiveData()
     }
 
-    fun getPassword(): LiveData<String> {
-        return pref.getPassword().asLiveData()
-    }
-
     fun updateName(name: String) {
         viewModelScope.launch {
             (getName() as MutableLiveData).postValue(name)
-        }
-    }
-
-    fun savePassword(password: String) {
-        viewModelScope.launch {
-            pref.savePassword(password)
         }
     }
 

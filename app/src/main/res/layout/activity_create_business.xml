@@ -25,21 +25,11 @@
             android:text="Create Your business"
             android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:textColor="#78828A"
-            android:text="@string/lorem_ipsum_dolor_sit_amet_consectetur"
-            android:textSize="14sp" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_marginTop="25dp"
-            android:layout_height="250dp"
+            android:layout_height="300dp"
             android:src="@drawable/ilustrator_login"
             android:layout_marginBottom="25dp"
             android:layout_gravity="center"
@@ -49,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:text="business name"
+            android:text="Business name"
             android:fontFamily="@font/inter_semibold"
             android:layout_marginStart="20dp"
             android:textSize="14sp"/>

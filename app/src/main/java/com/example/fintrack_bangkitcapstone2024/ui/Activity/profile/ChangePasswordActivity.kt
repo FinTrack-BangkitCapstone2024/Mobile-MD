@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityChangePasswordBinding
-import com.example.fintrack_bangkitcapstone2024.request.RequestUpdate
+import com.example.fintrack_bangkitcapstone2024.request.RequestUpdatePassword
 import com.example.fintrack_bangkitcapstone2024.response.ResponseRegister
 import com.example.fintrack_bangkitcapstone2024.ui.Activity.auth.dataStore
 import com.example.fintrack_bangkitcapstone2024.viewModel.AuthViewModel
@@ -37,38 +37,31 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener { finish() }
 
-        userViewModel.getUserId().observe(this, Observer { userId ->
-            userIdBackup = userId
+        userViewModel.getUserId().observe(this, Observer {
+            userIdBackup = it
         })
 
         binding.btnSaveChanges.setOnClickListener { changePassword() }
 
-        authViewModel.userUpdateResponse.observe(this) { response ->
-            handleUpdateResponse(response)
-        }
+
     }
 
     private fun updateUserProfile() {
         userViewModel.getName().observe(this, Observer { sameName ->
             val newPass = binding.cvPassRegister.text.toString()
+            val oldPass = binding.cvCurrentPassword.text.toString()
 
-            // Save name to preferences
-            userViewModel.savePassword(newPass)
-
-            // If new password is empty, return the previous password
-            val requestUpdateUser = RequestUpdate(
-                password = newPass,
-                name = sameName
+            val requestUpdatePassword = RequestUpdatePassword(
+                oldPass,
+                newPass
             )
-            authViewModel.updateUser(userIdBackup, requestUpdateUser)
+            authViewModel.updatePassword(userIdBackup,requestUpdatePassword)
         })
     }
 
     private fun changePassword() {
+
         val currentPassword = binding.cvCurrentPassword.toString()
-        userViewModel.getPassword().observe(this, Observer {
-            backUpPassword = it
-        })
         val newPassword = binding.cvPassRegister.text.toString()
         val confirmPassword = binding.cvPassSame.text.toString()
 
@@ -85,15 +78,14 @@ class ChangePasswordActivity : AppCompatActivity() {
                 // New password is the same as the current password
                 Toast.makeText(this, "New password should be different from the current password", Toast.LENGTH_SHORT).show()
             }
-            currentPassword != backUpPassword -> {
-                // Current password is incorrect
-                Log.e("ChangePasswordActivity", backUpPassword)
-                Toast.makeText(this, "Current password is incorrect", Toast.LENGTH_SHORT).show()
-            }
+
             else -> {
                 // All conditions are met, proceed with the password change
                 updateUserProfile()
-                Toast.makeText(this, "Password changed successfully", Toast.LENGTH_SHORT).show()
+                authViewModel.userUpdateResponse.observe(this) { response ->
+                    handleUpdateResponse(response)
+                }
+
             }
         }
     }
@@ -105,8 +97,15 @@ class ChangePasswordActivity : AppCompatActivity() {
                 userViewModel.saveName(it.name)
                 userViewModel.updateName(it.name) // Update the LiveData
             }
+            // buatkan toast
+            Toast.makeText(this, "Password updated successfully", Toast.LENGTH_SHORT).show()
+            // buatkan intent ke profile activity
+            finish()
         } else {
             Log.d("EditProfileActivity", "Update user request not successful")
+            Log.d("EditProfileActivity", "Chek your password and try again")
+            // buatkan toast
+            Toast.makeText(this, "Check your password and try again", Toast.LENGTH_SHORT).show()
         }
     }
 }

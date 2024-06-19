@@ -300,7 +300,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="10dp"
                     android:backgroundTint="#00FFFFFF"
                     app:cardCornerRadius="15dp"
                     app:strokeWidth="0dp"
@@ -317,28 +317,100 @@
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            app:cardCornerRadius="12dp"
+                            app:cardCornerRadius="20dp"
                             android:layout_marginHorizontal="4dp"
-                            android:backgroundTint="#205E98" />
+                            android:backgroundTint="#205E98" >
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="8dp"
+                                    android:src="@drawable/ic_aset_management" />
+
+                                <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="8dp"
+                                android:fontFamily="@font/inter_semibold"
+                                android:text="Inventory"
+                                android:textColor="#66000000"
+                                android:textSize="12sp" />
+                            </RelativeLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/btn_to_forcasting"
+                            android:id="@+id/btnToForecasting"
                             android:layout_width="match_parent"
                             android:layout_weight="1"
-                            app:cardCornerRadius="12dp"
                             android:layout_height="match_parent"
+                            app:cardCornerRadius="20dp"
                             android:layout_marginHorizontal="4dp"
                             android:backgroundTint="#05A6BE" >
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:padding="22dp"
+                                    android:scaleType="centerCrop"
+                                    android:layout_marginBottom="8dp"
+                                    android:src="@drawable/ic_forcasting" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_marginBottom="8dp"
+                                    android:fontFamily="@font/inter_semibold"
+                                    android:text="Forecasting"
+                                    android:textColor="#66000000"
+                                    android:textSize="12sp" />
+                            </RelativeLayout>
                         </com.google.android.material.card.MaterialCardView>
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/btnToReport"
-                            android:transitionName="btnTranskasi"
-                            android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/btnToReport"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="20dp"
+                        android:layout_marginHorizontal="4dp"
+                        android:backgroundTint="#7DB0DE" >
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:backgroundTint="#12395D"
-                            app:cardCornerRadius="12dp"
-                            android:layout_marginHorizontal="4dp">
-                        </com.google.android.material.card.MaterialCardView>
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="12dp"
+                                android:src="@drawable/ic_report" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="8dp"
+                                android:fontFamily="@font/inter_semibold"
+                                android:text="Report"
+                                android:textColor="#66000000"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+                    </com.google.android.material.card.MaterialCardView>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 

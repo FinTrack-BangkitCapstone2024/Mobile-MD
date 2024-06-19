@@ -45,6 +45,19 @@ class ReportYearlyFragment : Fragment() {
             yearlyDataViewModel.fetchAnalizeData(it)
         }
 
+        yearlyDataViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                binding.overlay.visibility = View.VISIBLE
+                binding.progressIndicatorReport.visibility = View.VISIBLE
+            } else {
+                binding.overlay.visibility = View.GONE
+                binding.progressIndicatorReport.visibility = View.GONE
+            }
+        }
+
+
+
+
         // Observe the yearlyData LiveData
         yearlyDataViewModel.yearlyData.observe(viewLifecycleOwner) { yearlyData ->
             if (yearlyData != null) {

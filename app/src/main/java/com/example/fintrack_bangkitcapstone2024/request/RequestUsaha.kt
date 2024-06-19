@@ -3,7 +3,6 @@ package com.example.fintrack_bangkitcapstone2024.request
 import com.google.gson.annotations.SerializedName
 
 data class RequestUsaha(
-
 	@field:SerializedName("nama")
 	val nama: String,
 

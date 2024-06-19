@@ -3,7 +3,7 @@ package com.example.fintrack_bangkitcapstone2024.Api
 import com.example.fintrack_bangkitcapstone2024.request.RequestFinancials
 import com.example.fintrack_bangkitcapstone2024.request.RequestLogin
 import com.example.fintrack_bangkitcapstone2024.request.RequestRegister
-import com.example.fintrack_bangkitcapstone2024.request.RequestUpdate
+import com.example.fintrack_bangkitcapstone2024.request.RequestUpdatePassword
 import com.example.fintrack_bangkitcapstone2024.request.RequestUsaha
 import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseAddFInancial
 import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseFinancialData
@@ -47,11 +47,16 @@ interface ApiService {
     ): Call<ResponseBody>
 
     @PUT("users/{id}")
-    fun updateUser(
+    fun updateUserDetails(
         @Path("id") id: String,
-        @Body requestUpdateUser: RequestUpdate
+        @Body name:String
     ): Call<ResponseRegister>
 
+    @PUT("users/{id}/password")
+    fun updateUserPassword(
+        @Path("id") id: String,
+        @Body requestUpdatePassword: RequestUpdatePassword
+    ): Call<ResponseRegister>
 
     @GET("usaha/{usaha_id}/financial")
     fun getFinancialDataFromUsaha(
