@@ -17,10 +17,10 @@ data class ResponseDataAnalysis(
 data class Weekly(
 
 	@field:SerializedName("pengeluaran")
-	val pengeluaran: List<Any>,
+	val pengeluaran: List<Int>,
 
 	@field:SerializedName("masukan")
-	val masukan: List<Any>,
+	val masukan: List<Int>,
 
 	@field:SerializedName("day")
 	val day: List<String>
@@ -40,8 +40,8 @@ data class Data(
 
 data class Yearly(
 
-	@field:SerializedName("tahun")
-	val tahun: List<Int>,
+	@field:SerializedName("bulan")
+	val bulan	: List<String>,
 
 	@field:SerializedName("pengeluaran")
 	val pengeluaran: List<Int>,

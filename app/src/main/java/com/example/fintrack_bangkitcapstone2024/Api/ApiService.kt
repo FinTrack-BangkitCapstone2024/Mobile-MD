@@ -7,6 +7,7 @@ import com.example.fintrack_bangkitcapstone2024.request.RequestUpdate
 import com.example.fintrack_bangkitcapstone2024.request.RequestUsaha
 import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseAddFInancial
 import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseFinancialData
+import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseForcasting
 import com.example.fintrack_bangkitcapstone2024.response.ResonseReport.ResponseDataAnalysis
 import com.example.fintrack_bangkitcapstone2024.response.ResponseLogin
 import com.example.fintrack_bangkitcapstone2024.response.ResponseRegister
@@ -26,7 +27,7 @@ import retrofit2.http.Path
 
 
 interface ApiService {
-    @POST("auth/signUpWithEmail") // replace with your actual endpoint
+    @POST("auth/signUpWithEmail")
     fun registerData(@Body registerUser: RequestRegister): Call<ResponseRegister>
 
     @POST("auth/signInWithEmail")
@@ -66,6 +67,10 @@ interface ApiService {
 
     @GET("usaha/owner/{id}")
     fun getListUsahaByOwner(@Path("id") id: String): Call<ResponseListUsahaById>
+
+
+    @GET("usaha/{usahaId}/forecasting")
+    fun getDataForcasting(@Path("usahaId") usahaId: String): Call<ResponseForcasting>
 
 
 }

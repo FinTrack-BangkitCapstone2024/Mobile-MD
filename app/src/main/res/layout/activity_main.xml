@@ -330,6 +330,7 @@
                             android:backgroundTint="#05A6BE" >
                         </com.google.android.material.card.MaterialCardView>
                         <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnToReport"
                             android:transitionName="btnTranskasi"
                             android:layout_weight="1"
                             android:layout_width="match_parent"

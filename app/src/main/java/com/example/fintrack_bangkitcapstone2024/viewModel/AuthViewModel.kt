@@ -10,8 +10,10 @@ import com.example.fintrack_bangkitcapstone2024.request.RequestLogin
 import com.example.fintrack_bangkitcapstone2024.request.RequestRegister
 import com.example.fintrack_bangkitcapstone2024.request.RequestUpdate
 import com.example.fintrack_bangkitcapstone2024.request.RequestUsaha
+import com.example.fintrack_bangkitcapstone2024.response.Financial.DataForcasting
 import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseAddFInancial
 import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseFinancialData
+import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseForcasting
 import com.example.fintrack_bangkitcapstone2024.response.ResponseLogin
 import com.example.fintrack_bangkitcapstone2024.response.ResponseRegister
 import com.example.fintrack_bangkitcapstone2024.response.Usaha.ResponseUsaha
@@ -47,6 +49,9 @@ class AuthViewModel : ViewModel() {
     private val _usahaId = MutableLiveData<String>()
     val usahaId: LiveData<String> = _usahaId
 
+    private val _forcastingData = MutableLiveData<DataForcasting?>()
+    val forcastingData: LiveData<DataForcasting?> = _forcastingData
+
 
     private val _usahaResponse = MutableLiveData<ResponseUsaha?>()
     val usahaResponse: LiveData<ResponseUsaha?> = _usahaResponse
@@ -79,6 +84,31 @@ class AuthViewModel : ViewModel() {
         _isLoading.value = false
         isError = true
         _message.value = "Error message: " + t.message.toString()
+    }
+
+    fun getDataForcasting(usahaId: String) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().getDataForcasting(usahaId)
+        api.enqueue(object : Callback<ResponseForcasting> {
+            override fun onResponse(
+                call: Call<ResponseForcasting>,
+                response: Response<ResponseForcasting>
+            ) {
+                if (response.isSuccessful) {
+                    _isLoading.value = false
+                    _message.value = "Successfully fetched data"
+                    _forcastingData.value = response.body()?.data
+                } else {
+                    _isLoading.value = false
+                    _message.value = "Failed to fetch data: ${response.message()}"
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseForcasting>, t: Throwable) {
+                _isLoading.value = false
+                _message.value = "Error message: " + t.message.toString()
+            }
+        })
     }
 
     fun getFinancialData(usahaId: String) {
