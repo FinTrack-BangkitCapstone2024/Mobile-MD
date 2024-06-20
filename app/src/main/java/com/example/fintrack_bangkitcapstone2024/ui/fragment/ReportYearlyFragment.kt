@@ -55,13 +55,9 @@ class ReportYearlyFragment : Fragment() {
             }
         }
 
-
-
-
         // Observe the yearlyData LiveData
         yearlyDataViewModel.yearlyData.observe(viewLifecycleOwner) { yearlyData ->
             if (yearlyData != null) {
-                Log.d("ReportMontlyFragmentyearlyData", "yearly Data: $yearlyData")
                 val pengeluaran = yearlyData.pengeluaran
                 val masukan = yearlyData.masukan
                 val bulan = yearlyData.bulan
@@ -79,10 +75,10 @@ class ReportYearlyFragment : Fragment() {
                     val currentTanggal = bulan?.get(i)
                     val currentPengeluaran = pengeluaran?.get(i) ?: 0
                     val currentMasukan = masukan?.get(i) ?: 0
-                    Log.d(
-                        "ReportMontlyFragment",
-                        "Tanggal: $currentTanggal, Income: $currentMasukan, Expense: $currentPengeluaran"
-                    )
+//                    Log.d(
+//                        "ReportMontlyFragment",
+//                        "Tanggal: $currentTanggal, Income: $currentMasukan, Expense: $currentPengeluaran"
+//                    )
 
                     // Add entries to the lists
                     incomeEntries.add(
@@ -99,9 +95,9 @@ class ReportYearlyFragment : Fragment() {
                     )
                 }
 
-                // Log the entries for debugging
-                Log.d("ReportMontlyFragment", "Income Entries: $incomeEntries")
-                Log.d("ReportMontlyFragment", "Expense Entries: $expenseEntries")
+//                // Log the entries for debugging
+//                Log.d("ReportMontlyFragment", "Income Entries: $incomeEntries")
+//                Log.d("ReportMontlyFragment", "Expense Entries: $expenseEntries")
 
                 // Create the data sets for the income and expense data
                 val incomeDataSet = LineDataSet(incomeEntries, "Pemasukan").apply {

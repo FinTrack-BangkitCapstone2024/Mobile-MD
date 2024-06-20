@@ -106,7 +106,7 @@ class ImportActivity : AppCompatActivity() {
         }
 
         binding.useTemplate.setOnClickListener {
-            val url = "https://youtube.com"
+            val url = getString(R.string.url_xlsx)
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
             startActivity(intent)

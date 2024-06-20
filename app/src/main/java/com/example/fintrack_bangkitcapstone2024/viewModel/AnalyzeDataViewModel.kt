@@ -1,6 +1,5 @@
 package com.example.fintrack_bangkitcapstone2024.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -46,15 +45,17 @@ class AnalyzeDataViewModel(private val userPreferences: UserPreferences) : ViewM
                 if (response.isSuccessful) {
                     _AnalysisDataResponse.value = response.body()
 
+                    val data = response.body()?.data
+                    if (data != null) {
+                        viewModelScope.launch {
+                            userPreferences.saveData(data)
+                        }
+                    }
+
                     // Save the data to LiveData
                     _yearlyData.value = response.body()?.data?.yearly
                     _monthlyData.value = response.body()?.data?.monthly
                     _weeklyData.value = response.body()?.data?.weekly
-                    Log.d(
-                        "AnalyzeDataViewModel",
-                        "Data saved to LiveData${_yearlyData.value},\n ${_monthlyData.value},\n ${_weeklyData.value}"
-                    )
-
                     // Save the data to DataStore
                     viewModelScope.launch {
                         response.body()?.data?.let { data ->
@@ -62,10 +63,6 @@ class AnalyzeDataViewModel(private val userPreferences: UserPreferences) : ViewM
                             // userPreferences.saveMasukan(data.masukan)
                             // userPreferences.saveDay(data.day)
                         }
-                        Log.d(
-                            "AnalyzeDataViewModel",
-                            "Data saved to DataStore${userPreferences.getMasukan()}, ${userPreferences.getPengeluaran()}, ${userPreferences.getDay()}, ${userPreferences.getMasukan()}"
-                        )
                     }
                 } else {
                     _AnalysisDataResponse.value = null

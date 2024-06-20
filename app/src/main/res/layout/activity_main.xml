@@ -314,12 +314,13 @@
                         android:weightSum="3"
                         android:orientation="horizontal">
                         <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnToInventory"
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
                             app:cardCornerRadius="20dp"
                             android:layout_marginHorizontal="4dp"
-                            android:backgroundTint="#205E98" >
+                            android:backgroundTint="#205E98">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"

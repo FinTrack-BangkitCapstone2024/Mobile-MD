@@ -1,20 +1,24 @@
 package com.example.fintrack_bangkitcapstone2024.Api
 
-
 import com.example.fintrack_bangkitcapstone2024.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class ApiConfig {
     companion object {
         fun getApiService(): ApiService {
             val loggingInterceptor = HttpLoggingInterceptor().apply {
-                level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                level =
+                    if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
             }
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .connectTimeout(1, TimeUnit.MINUTES) // set timeout untuk koneksi
+                .readTimeout(30, TimeUnit.SECONDS) // set timeout untuk membaca data
+                .writeTimeout(15, TimeUnit.SECONDS) // set timeout untuk menulis data
                 .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl(BuildConfig.API_URL)

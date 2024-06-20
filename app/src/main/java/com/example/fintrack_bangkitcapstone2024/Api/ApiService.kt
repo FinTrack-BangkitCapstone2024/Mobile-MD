@@ -49,7 +49,7 @@ interface ApiService {
     @PUT("users/{id}")
     fun updateUserDetails(
         @Path("id") id: String,
-        @Body name:String
+        @Body name: String
     ): Call<ResponseRegister>
 
     @PUT("users/{id}/password")
@@ -60,7 +60,7 @@ interface ApiService {
 
     @GET("usaha/{usaha_id}/financial")
     fun getFinancialDataFromUsaha(
-        @Path("usaha_id") usahaId: String
+        @Path("usaha_id") usahaId: String,
     ): Call<ResponseFinancialData>
 
 

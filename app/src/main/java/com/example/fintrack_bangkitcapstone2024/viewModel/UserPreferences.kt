@@ -5,6 +5,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.example.fintrack_bangkitcapstone2024.response.ResonseReport.Data
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -12,14 +14,32 @@ import kotlinx.coroutines.flow.map
 class UserPreferences private constructor(private val dataStore: DataStore<Preferences>) {
 
 
-    // usaha id
+
+    suspend fun saveData(data: Data) {
+        dataStore.edit { preferences ->
+            val gson = Gson()
+            val dataJson = gson.toJson(data)
+            preferences[DATA] = dataJson
+        }
+    }
+
+    fun getData(): Flow<Data?> {
+        return dataStore.data.map { preferences ->
+            val gson = Gson()
+            val dataJson = preferences[DATA]
+            if (dataJson != null) {
+                gson.fromJson(dataJson, Data::class.java)
+            } else {
+                null
+            }
+        }
+    }
+
     suspend fun saveUsahaId(usahaId: String) {
         dataStore.edit { preferences ->
             preferences[USAHA_ID] = usahaId
         }
     }
-
-
 
     fun getUsahaId(): Flow<String> {
         return dataStore.data.map { preferences ->
@@ -163,6 +183,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         private val MASUKAN = stringPreferencesKey("masukan")
         private val DAY = stringPreferencesKey("day")
         private val USAHA_ID = stringPreferencesKey("usaha_id")
+        private val DATA = stringPreferencesKey("data")
 
 
     }

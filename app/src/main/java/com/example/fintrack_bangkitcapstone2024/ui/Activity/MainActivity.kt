@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private var getUsahaIdtest: String = ""
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -56,6 +57,10 @@ class MainActivity : AppCompatActivity() {
                 binding.progressIndicator.visibility = View.GONE
             }
         })
+
+        binding.btnToInventory.setOnClickListener {
+            Toast.makeText(this, "Inventory Coming Soon", Toast.LENGTH_SHORT).show()
+        }
 
         userViewModel.getUsahaId().observe(this) { usahaId ->
             if (usahaId.isEmpty()) {

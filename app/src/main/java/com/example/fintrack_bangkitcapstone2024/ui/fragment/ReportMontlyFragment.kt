@@ -54,6 +54,9 @@ class ReportMontlyFragment : Fragment() {
             }
         }
 
+
+
+
         // Observe the monthlyData LiveData
         monthlyDataViewModel.monthlyData.observe(viewLifecycleOwner) { monthlyData ->
             if (monthlyData != null) {
@@ -63,9 +66,9 @@ class ReportMontlyFragment : Fragment() {
                 val tanggal = monthlyData.tanggal
 
                 // make log for check data tanggal
-                Log.d("ReportMontlyFragmentDate", "Tanggal: $tanggal")
-                Log.d("ReportMontlyFragmentPengluaran", "Pengeluaran: $pengeluaran")
-                Log.d("ReportMontlyFragmentMasukan", "Masukan: $masukan")
+//                Log.d("ReportMontlyFragmentDate", "Tanggal: $tanggal")
+//                Log.d("ReportMontlyFragmentPengluaran", "Pengeluaran: $pengeluaran")
+//                Log.d("ReportMontlyFragmentMasukan", "Masukan: $masukan")
 
                 val incomeEntries = mutableListOf<Entry>()
                 val expenseEntries = mutableListOf<Entry>()
@@ -75,10 +78,10 @@ class ReportMontlyFragment : Fragment() {
                     val currentTanggal = tanggal?.get(i)
                     val currentPengeluaran = pengeluaran?.get(i) ?: 0
                     val currentMasukan = masukan?.get(i) ?: 0
-                    Log.d(
-                        "ReportMontlyFragment",
-                        "Tanggal: $currentTanggal, Income: $currentMasukan, Expense: $currentPengeluaran"
-                    )
+//                    Log.d(
+//                        "ReportMontlyFragment",
+//                        "Tanggal: $currentTanggal, Income: $currentMasukan, Expense: $currentPengeluaran"
+//                    )
 
                     // Add entries to the lists
                     incomeEntries.add(
@@ -136,8 +139,10 @@ class ReportMontlyFragment : Fragment() {
                 binding.lineChart.xAxis.setDrawGridLines(false) // Disable vertical grid lines
                 binding.lineChart.axisLeft.setDrawGridLines(true) // Enable horizontal grid lines on left Y-axis
                 binding.lineChart.axisRight.setDrawGridLines(true) // Enable horizontal grid lines on right Y-axis
-                binding.lineChart.axisLeft.gridColor = Color.parseColor("#E3E9ED") // Set left Y-axis grid color to gray
-                binding.lineChart.axisRight.gridColor = Color.parseColor("#E3E9ED") // Set right Y-axis grid color to gray
+                binding.lineChart.axisLeft.gridColor =
+                    Color.parseColor("#E3E9ED") // Set left Y-axis grid color to gray
+                binding.lineChart.axisRight.gridColor =
+                    Color.parseColor("#E3E9ED") // Set right Y-axis grid color to gray
             } else {
                 Log.d("ReportMontlyFragment", "Failed to fetch data")
             }

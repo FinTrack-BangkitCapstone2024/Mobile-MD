@@ -19,7 +19,7 @@ android {
 
     buildTypes {
         debug{
-            buildConfigField("String", "API_URL", "\"https://fintrack-424802.et.r.appspot.com/api/\"")
+            buildConfigField("String", "API_URL", "\"https://fintrack-427015.et.r.appspot.com/api/\"")
         }
         release {
             isMinifyEnabled = false
@@ -27,7 +27,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "API_URL", "\"https://fintrack-424802.et.r.appspot.com/api/\"")
+            buildConfigField("String", "API_URL", "\"https://fintrack-427015.et.r.appspot.com/api/\"")
         }
     }
     compileOptions {
@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.room.common)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,12 +67,14 @@ dependencies {
     implementation (libs.converter.gson)
     implementation (libs.logging.interceptor)
 
+    // paging
+    implementation("androidx.paging:paging-runtime-ktx:3.3.0")
     implementation (libs.androidx.datastore.preferences)
     implementation (libs.androidx.lifecycle.livedata.ktx)
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
 
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-
+    implementation (libs.gson)
     implementation ("com.github.amarjain07:StickyScrollView:1.0.3")
 }
 

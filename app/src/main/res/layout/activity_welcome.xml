@@ -20,7 +20,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to my Application"
+        android:text="@string/welcome_to_fintrack"
         android:fontFamily="@font/inter_semibold"
         android:textSize="24sp"
         android:letterSpacing="0"
@@ -31,7 +31,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lorem ipsum dolor sit amet, consectetur"
+        android:text="@string/track_your_finance_easily_with_fintrack"
         android:textColor="#78828A"
         android:layout_gravity="center"/>
 
@@ -44,7 +44,7 @@
         android:fontFamily="@font/inter"
         android:background="@drawable/border_buttom"
         app:backgroundTint="@color/black"
-        android:text="Login"/>
+        android:text="@string/login"/>
 
 
     <LinearLayout
@@ -72,7 +72,6 @@
             android:layout_height="1dp"
             android:background="#9CA4AB"/>
     </LinearLayout>
-
 
     <Button
         android:id="@+id/btn_to_regis"

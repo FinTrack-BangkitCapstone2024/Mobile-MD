@@ -41,7 +41,6 @@ class ReportWeeklyFragment : Fragment() {
             ViewModelProvider(this, ViewModelFactory(preferences))[UserViewModel::class.java]
 
         userViewModel.getUsahaId().observe(viewLifecycleOwner) {
-            Log.d("ReportMontlyFragment", "User ID: $it")
             weeklyDataViewModel.fetchAnalizeData(it)
         }
         weeklyDataViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
@@ -54,18 +53,20 @@ class ReportWeeklyFragment : Fragment() {
             }
         }
 
+        // deklarasi userViewModel
+
+
+
+
+
         // Observe the weeklyData LiveData
-        weeklyDataViewModel.weeklyData.observe(viewLifecycleOwner) { weeklyData ->
+        userViewModel.getData().observe(viewLifecycleOwner) { weeklyData ->
             if (weeklyData != null) {
                 Log.d("ReportMontlyFragmentweeklyData", "weekly Data: $weeklyData")
-                val pengeluaran = weeklyData.pengeluaran
-                val masukan = weeklyData.masukan
-                val tanggal = weeklyData.day
+                val pengeluaran = weeklyData.weekly.pengeluaran
+                val masukan = weeklyData.weekly.masukan
+                val tanggal = weeklyData.weekly.day
 
-                // make log for check data tanggal
-                Log.d("ReportMontlyFragmentDate", "Tanggal: $tanggal")
-                Log.d("ReportMontlyFragmentPengluaran", "Pengeluaran: $pengeluaran")
-                Log.d("ReportMontlyFragmentMasukan", "Masukan: $masukan")
 
                 val incomeEntries = mutableListOf<BarEntry>()
                 val expenseEntries = mutableListOf<BarEntry>()
@@ -75,10 +76,10 @@ class ReportWeeklyFragment : Fragment() {
                     val currentTanggal = tanggal?.get(i)
                     val currentPengeluaran = pengeluaran?.get(i) ?: 0
                     val currentMasukan = masukan?.get(i) ?: 0
-                    Log.d(
-                        "ReportMontlyFragment",
-                        "Tanggal: $currentTanggal, Income: $currentMasukan, Expense: $currentPengeluaran"
-                    )
+//                    Log.d(
+//                        "ReportMontlyFragment",
+//                        "Tanggal: $currentTanggal, Income: $currentMasukan, Expense: $currentPengeluaran"
+//                    )
 
                     // Add entries to the lists
                     incomeEntries.add(
@@ -95,9 +96,9 @@ class ReportWeeklyFragment : Fragment() {
                     )
                 }
 
-                // Log the entries for debugging
-                Log.d("ReportMontlyFragment", "Income Entries: $incomeEntries")
-                Log.d("ReportMontlyFragment", "Expense Entries: $expenseEntries")
+//                // Log the entries for debugging
+//                Log.d("ReportMontlyFragment", "Income Entries: $incomeEntries")
+//                Log.d("ReportMontlyFragment", "Expense Entries: $expenseEntries")
 
                 // Create the data sets for the income and expense data
                 val incomeDataSet = BarDataSet(incomeEntries, "Pemasukan").apply {

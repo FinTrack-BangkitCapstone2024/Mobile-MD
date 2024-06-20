@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.fintrack_bangkitcapstone2024.response.ResonseReport.Data
 import kotlinx.coroutines.launch
 
 class UserViewModel(private val pref: UserPreferences) : ViewModel() {
@@ -77,6 +78,10 @@ class UserViewModel(private val pref: UserPreferences) : ViewModel() {
         viewModelScope.launch {
             pref.saveName(name)
         }
+    }
+
+    fun getData(): LiveData<Data?> {
+        return pref.getData().asLiveData()
     }
 
 

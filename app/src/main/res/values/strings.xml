@@ -62,6 +62,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="or_sign_in_with">Or Sign In with</string>
+    <string name="track_your_finance_easily_with_fintrack">Track your finance easily with Fintrack</string>
+    <string name="welcome_to_fintrack">Welcome to Fintrack</string>
+    <string name="url_xlsx"><![CDATA[https://docs.google.com/spreadsheets/d/1Y_L8V-kKgC62sc51l_u9N6Lo-oFDdPPL/edit?usp=sharing&ouid=102100023147370874009&rtpof=true&sd=true]]></string>
 
 
 </resources>
