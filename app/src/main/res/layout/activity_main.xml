@@ -34,12 +34,16 @@
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="250dp">
 
-                <ImageView
+                <TextView
+                    android:id="@+id/profile_usaha"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:contentDescription="@string/image"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:text="U"
+                    android:gravity="center"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/profile_picture" />
+                    android:background="#E2941E" />
             </androidx.cardview.widget.CardView>
 
             <TextView

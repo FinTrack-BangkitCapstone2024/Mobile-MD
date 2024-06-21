@@ -12,6 +12,7 @@ import com.example.fintrack_bangkitcapstone2024.response.ResonseReport.ResponseD
 import com.example.fintrack_bangkitcapstone2024.response.ResponseLogin
 import com.example.fintrack_bangkitcapstone2024.response.ResponseRegister
 import com.example.fintrack_bangkitcapstone2024.response.Usaha.ResponseListUsahaById
+import com.example.fintrack_bangkitcapstone2024.response.Usaha.ResponseReportToday
 import com.example.fintrack_bangkitcapstone2024.response.Usaha.ResponseUsaha
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -76,6 +77,9 @@ interface ApiService {
 
     @GET("usaha/{usahaId}/forecasting")
     fun getDataForcasting(@Path("usahaId") usahaId: String): Call<ResponseForcasting>
+
+    @GET("usaha/{usahaId}/laporan")
+    fun getReport(@Path("usahaId") usahaId: String): Call<ResponseReportToday>
 
 
 }

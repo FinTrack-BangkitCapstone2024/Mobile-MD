@@ -3,7 +3,9 @@ package com.example.fintrack_bangkitcapstone2024.ui.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack_bangkitcapstone2024.databinding.ActivityForcastingBinding
 import com.example.fintrack_bangkitcapstone2024.ui.Activity.auth.dataStore
@@ -12,6 +14,7 @@ import com.example.fintrack_bangkitcapstone2024.viewModel.AuthViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.ViewModelFactory
+import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -41,6 +44,19 @@ class ForcastingActivity : AppCompatActivity() {
             authViewModel.getDataForcasting(it)
             analyzeDataViewModel.fetchAnalizeData(it)
         }
+
+        val barChart: BarChart=binding.barChart
+        barChart.setNoDataText("Coming soon")
+
+        authViewModel.isLoading.observe(this, Observer { isLoading ->
+            if (isLoading) {
+                binding.overlay.visibility = View.VISIBLE
+                binding.progressIndicatorReport.visibility = View.VISIBLE
+            } else {
+                binding.overlay.visibility = View.GONE
+                binding.progressIndicatorReport.visibility = View.GONE
+            }
+        })
 
         binding.btnBack.setOnClickListener {
             finish()

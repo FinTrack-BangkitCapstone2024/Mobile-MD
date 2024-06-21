@@ -20,6 +20,7 @@ import com.example.fintrack_bangkitcapstone2024.ui.Activity.auth.dataStore
 import com.example.fintrack_bangkitcapstone2024.ui.fragment.ReportMontlyFragment
 import com.example.fintrack_bangkitcapstone2024.ui.fragment.ReportWeeklyFragment
 import com.example.fintrack_bangkitcapstone2024.ui.fragment.ReportYearlyFragment
+import com.example.fintrack_bangkitcapstone2024.utils.CurrencyUtil.toRupiah
 import com.example.fintrack_bangkitcapstone2024.viewModel.AuthViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserViewModel
@@ -60,9 +61,21 @@ class ReportActivity : AppCompatActivity() {
 
         userLoginViewModel.getUsahaId().observe(this) { usahId ->
             Log.d("Response", "Usaha ID: $usahId")
+            authViewModel.getReport(usahId)
             authViewModel.getFinancialData(usahId)
+
         }
 
+
+        authViewModel.dataTodayProfit.observe(this, Observer { response ->
+            binding.jumlahIncomeProfit.text = response.data.pemasukan.jumlah.toRupiah()
+            binding.jumlahExpenseProfit.text = response.data.pengeluaran.jumlah.toRupiah()
+            binding.selisihIncomeProfit.text = response.data.pemasukan.selisih.toString()
+            binding.selisihExpenseProfit.text = response.data.pengeluaran.selisih.toString()
+            binding.persenIncome.text = "${response.data.pemasukan.persentase}%"
+            binding.persenExpense.text = "${response.data.pengeluaran.persentase}%"
+
+        })
 
         authViewModel.financialData.observe(this, Observer { response ->
             Log.d("MainActivity", "Response: $response")

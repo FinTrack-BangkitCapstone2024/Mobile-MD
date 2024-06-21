@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
         authViewModel.usahaResponse.observe(this, Observer { responseUsaha ->
             responseUsaha?.let {
                 binding.nameBusiness.text = it.data.nama
+                binding.profileUsaha.text = it.data.nama.first().uppercase().toString()
                 binding.tvBalance.text = it.data.balance.toRupiah()
                 binding.pengeluaran.text = it.data.totalPengeluaran.toRupiah().replace(",00", "")
                 binding.pemasukan.text = it.data.totalPemasukan.toRupiah().replace(",00", "")

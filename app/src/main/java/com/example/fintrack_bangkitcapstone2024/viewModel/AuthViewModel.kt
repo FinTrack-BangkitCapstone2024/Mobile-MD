@@ -16,6 +16,9 @@ import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseFinan
 import com.example.fintrack_bangkitcapstone2024.response.Financial.ResponseForcasting
 import com.example.fintrack_bangkitcapstone2024.response.ResponseLogin
 import com.example.fintrack_bangkitcapstone2024.response.ResponseRegister
+import com.example.fintrack_bangkitcapstone2024.response.Usaha.DataListUsaha
+import com.example.fintrack_bangkitcapstone2024.response.Usaha.ResponseListUsahaById
+import com.example.fintrack_bangkitcapstone2024.response.Usaha.ResponseReportToday
 import com.example.fintrack_bangkitcapstone2024.response.Usaha.ResponseUsaha
 import com.example.fintrack_bangkitcapstone2024.response.User
 import retrofit2.Call
@@ -61,6 +64,8 @@ class AuthViewModel : ViewModel() {
     private val _usahaResponse = MutableLiveData<ResponseUsaha?>()
     val usahaResponse: LiveData<ResponseUsaha?> = _usahaResponse
 
+    private val _dataTodayProfit = MutableLiveData<ResponseReportToday>()
+    val dataTodayProfit: LiveData<ResponseReportToday> = _dataTodayProfit
 
     private val _userUpdateResponse = MutableLiveData<ResponseRegister?>()
     val userUpdateResponse: LiveData<ResponseRegister?> = _userUpdateResponse
@@ -97,6 +102,37 @@ class AuthViewModel : ViewModel() {
         }
     }
 
+    fun getReport(usahaId: String) {
+    _isLoading.value = true
+    val api = ApiConfig.getApiService().getReport(usahaId)
+    api.enqueue(object : Callback<ResponseReportToday> {
+        override fun onResponse(
+            call: Call<ResponseReportToday>,
+            response: Response<ResponseReportToday>
+        ) {
+            _isLoading.value = false
+            if (response.isSuccessful) {
+                // Handle the successful response here
+                _dataTodayProfit.value = response.body()
+                // Now you can use pemasukan and pengeluaran
+            } else {
+                when (response.code()) {
+                    400 -> _message.value = "Bad request"
+                    408 -> _message.value = "Your internet connection is slow, please try again"
+                    500 -> _message.value = "An error occurred, please try again"
+                    else -> Log.d("Response code", response.message())
+                }
+            }
+        }
+
+        override fun onFailure(call: Call<ResponseReportToday>, t: Throwable) {
+            _isLoading.value = false
+            _errorMessage.value = t.message
+        }
+    })
+}
+
+
     fun getDataForcasting(usahaId: String) {
         _isLoading.value = true
         val api = ApiConfig.getApiService().getDataForcasting(usahaId)
@@ -110,8 +146,8 @@ class AuthViewModel : ViewModel() {
                     _message.value = "Successfully fetched data"
                     _forcastingData.value = response.body()?.data
                 } else {
-                    _message.value = "Failed to fetch data: ${response.message()}"
                 }
+                _message.value = "Failed to fetch data: ${response.message()}"
             }
 
             override fun onFailure(call: Call<ResponseForcasting>, t: Throwable) {
