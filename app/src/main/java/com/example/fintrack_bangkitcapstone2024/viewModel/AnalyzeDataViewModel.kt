@@ -45,13 +45,6 @@ class AnalyzeDataViewModel(private val userPreferences: UserPreferences) : ViewM
                 if (response.isSuccessful) {
                     _AnalysisDataResponse.value = response.body()
 
-                    val data = response.body()?.data
-                    if (data != null) {
-                        viewModelScope.launch {
-                            userPreferences.saveData(data)
-                        }
-                    }
-
                     // Save the data to LiveData
                     _yearlyData.value = response.body()?.data?.yearly
                     _monthlyData.value = response.body()?.data?.monthly

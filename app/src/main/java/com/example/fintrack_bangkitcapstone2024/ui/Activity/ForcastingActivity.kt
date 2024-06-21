@@ -12,9 +12,11 @@ import com.example.fintrack_bangkitcapstone2024.viewModel.AuthViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserPreferences
 import com.example.fintrack_bangkitcapstone2024.viewModel.UserViewModel
 import com.example.fintrack_bangkitcapstone2024.viewModel.ViewModelFactory
+import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
 
 class ForcastingActivity : AppCompatActivity() {
 
@@ -28,7 +30,6 @@ class ForcastingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityForcastingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         val preferences = UserPreferences.getInstance(dataStore)
         val userViewModel =
@@ -46,61 +47,67 @@ class ForcastingActivity : AppCompatActivity() {
         }
 
         analyzeDataViewModel.monthlyData.observe(this) { monthlyData ->
-            val totalPemasukanMonthly = monthlyData?.masukan?.sum() ?: 0
-            val totalPengeluaranMonthly = monthlyData?.pengeluaran?.sum() ?: 0
-            val balanceMonthly = totalPemasukanMonthly - totalPengeluaranMonthly
-            Log.d("ForcastingData", "Monthly Balance: $balanceMonthly")
+            val incomeEntries = mutableListOf<Entry>()
+            val expenseEntries = mutableListOf<Entry>()
 
-            // Add balanceMonthly to the line chart
-            val balanceEntries = mutableListOf<Entry>()
-            balanceEntries.add(Entry(0f, balanceMonthly.toFloat()))
-            val balanceDataSet = LineDataSet(balanceEntries, "Balance").apply {
-                color = Color.parseColor("#0000FF") // Set color to blue
-                lineWidth = 2f
-                setDrawCircles(false)
-                setDrawValues(false)
+            // Tambahkan entri dari monthlyData
+            monthlyData?.let {
+                for (i in it.tanggal.indices) {
+                    incomeEntries.add(Entry(i.toFloat(), it.masukan[i].toFloat()))
+                    expenseEntries.add(Entry(i.toFloat(), it.pengeluaran[i].toFloat()))
+                }
             }
-            val data = LineData(balanceDataSet)
-            binding.lineChartForcasting.data = data
-            binding.lineChartForcasting.invalidate()
-        }
 
-        authViewModel.forcastingData.observe(this) { dataForcasting ->
-            val totalPemasukanForcasting =
-                dataForcasting?.pemasukan?.sumByDouble { it as Double } ?: 0.0
-            val totalPengeluaranForcasting =
-                dataForcasting?.pengeluaran?.sumByDouble { it as Double } ?: 0.0
-            val balanceForcasting = totalPemasukanForcasting - totalPengeluaranForcasting
-            Log.d("ForcastingData", "Forcasting Balance: $balanceForcasting")
-
-            // Add balanceForcasting to the line chart
-            val balanceEntries = mutableListOf<Entry>()
-            balanceEntries.add(Entry(1f, balanceForcasting.toFloat()))
-            val balanceDataSet = LineDataSet(balanceEntries, "Balance").apply {
-                color = Color.parseColor("#0000FF") // Set color to blue
+            // Buat LimitLine setelah menambahkan entri monthlyData
+            val limitLine = LimitLine(incomeEntries.size.toFloat()).apply {
                 lineWidth = 2f
-                setDrawCircles(false)
-                setDrawValues(false)
+                lineColor = Color.BLACK
+                enableDashedLine(10f, 10f, 0f)
             }
-            val data = LineData(balanceDataSet)
-            binding.lineChartForcasting.data = data
-            binding.lineChartForcasting.invalidate()
-        }
 
-        authViewModel.forcastingData.observe(this) { dataForcasting ->
-            val totalPemasukanForcasting =
-                dataForcasting?.pemasukan?.sumByDouble { it as Double } ?: 0.0
-            val totalPengeluaranForcasting =
-                dataForcasting?.pengeluaran?.sumByDouble { it as Double } ?: 0.0
-            val balanceForcasting = totalPemasukanForcasting - totalPengeluaranForcasting
-            Log.d("ForcastingData", "Forcasting Balance: $balanceForcasting")
-        }
+            // Tambahkan LimitLine ke LineChart
+            binding.lineChartForcasting.xAxis.addLimitLine(limitLine)
 
-        analyzeDataViewModel.monthlyData.observe(this) { monthlyData ->
-            val totalPemasukanMonthly = monthlyData?.masukan?.sum() ?: 0
-            val totalPengeluaranMonthly = monthlyData?.pengeluaran?.sum() ?: 0
-            val balanceMonthly = totalPemasukanMonthly - totalPengeluaranMonthly
-            Log.d("ForcastingData", "Monthly Balance: $balanceMonthly")
+            // Amati forcastingData di dalam pengamat monthlyData
+            authViewModel.forcastingData.observe(this) { forcastingData ->
+                // Tambahkan entri dari forcastingData
+                forcastingData?.let {
+                    val start = incomeEntries.size
+                    for (i in it.pemasukan.indices) {
+                        incomeEntries.add(Entry((start + i).toFloat(), it.pemasukan[i].toFloat()))
+                        expenseEntries.add(
+                            Entry(
+                                (start + i).toFloat(),
+                                it.pengeluaran[i].toFloat()
+                            )
+                        )
+                    }
+                }
+
+                // Buat set data
+                val incomeDataSet = LineDataSet(incomeEntries, "Pemasukan").apply {
+                    color = Color.parseColor("#3AB400")
+                    lineWidth = 2f
+                    setDrawCircles(false)
+                    setDrawValues(false)
+                }
+
+                val expenseDataSet = LineDataSet(expenseEntries, "Pengeluaran").apply {
+                    color = Color.parseColor("#E20000")
+                    lineWidth = 2f
+                    setDrawCircles(false)
+                    setDrawValues(false)
+                }
+
+                // Buat LineData dengan set data
+                val data = LineData(incomeDataSet, expenseDataSet)
+
+                // Set data ke LineChart
+                binding.lineChartForcasting.data = data
+
+                // Segarkan chart
+                binding.lineChartForcasting.invalidate()
+            }
         }
     }
 }

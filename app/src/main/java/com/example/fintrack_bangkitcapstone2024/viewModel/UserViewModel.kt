@@ -80,9 +80,6 @@ class UserViewModel(private val pref: UserPreferences) : ViewModel() {
         }
     }
 
-    fun getData(): LiveData<Data?> {
-        return pref.getData().asLiveData()
-    }
 
 
     fun clearDataLogin() {

@@ -16,8 +16,8 @@ data class ResponseForcasting(
 
 data class DataForcasting(
 	@field:SerializedName("pemasukan")
-	val pemasukan: List<Any?>? = null,
+	val pemasukan: List<Float>,
 
 	@field:SerializedName("pengeluaran")
-	val pengeluaran: List<Any?>? = null
+	val pengeluaran: List<Float>
 )

@@ -122,6 +122,7 @@ class AuthViewModel : ViewModel() {
     }
 
     fun getFinancialData(usahaId: String) {
+        Log.d("getFinancialData", "Called with usahaId: $usahaId")
         _isLoading.value = true
         val api = ApiConfig.getApiService().getFinancialDataFromUsaha(usahaId)
         api.enqueue(object : Callback<ResponseFinancialData> {
@@ -132,14 +133,17 @@ class AuthViewModel : ViewModel() {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     _financialData.value = response.body()
+                    Log.d("getFinancialData", "Response successful, data: ${response.body()}")
                 } else {
                     _errorMessage.value = "Error: ${response.code()}"
+                    Log.d("getFinancialData", "Response error, code: ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<ResponseFinancialData>, t: Throwable) {
                 _isLoading.value = false
                 _errorMessage.value = t.message
+                Log.d("getFinancialData", "Call failed, error: ${t.message}")
             }
         })
     }
@@ -238,9 +242,9 @@ class AuthViewModel : ViewModel() {
         })
     }
 
-    fun updateUser(id: String, name:String ) {
+    fun updateUser(id: String, name: String) {
         _isLoading.value = true
-        val api = ApiConfig.getApiService().updateUserDetails(id,name )
+        val api = ApiConfig.getApiService().updateUserDetails(id, name)
         api.enqueue(object : Callback<ResponseRegister> {
             override fun onResponse(
                 call: Call<ResponseRegister>,
@@ -273,7 +277,7 @@ class AuthViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     _userUpdateResponse.value = response.body()
                     _message.value = response.message()
-                    Log.d("test","Update password response: ${_message}")
+                    Log.d("test", "Update password response: ${_message}")
                 } else {
                     _userUpdateResponse.value = null
                 }

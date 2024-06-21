@@ -56,16 +56,13 @@ class ReportWeeklyFragment : Fragment() {
         // deklarasi userViewModel
 
 
-
-
-
-        // Observe the weeklyData LiveData
-        userViewModel.getData().observe(viewLifecycleOwner) { weeklyData ->
+        // Observe the weeklyData LiveDataw
+            weeklyDataViewModel.weeklyData.observe(viewLifecycleOwner) { weeklyData ->
             if (weeklyData != null) {
                 Log.d("ReportMontlyFragmentweeklyData", "weekly Data: $weeklyData")
-                val pengeluaran = weeklyData.weekly.pengeluaran
-                val masukan = weeklyData.weekly.masukan
-                val tanggal = weeklyData.weekly.day
+                val pengeluaran = weeklyData.pengeluaran
+                val masukan = weeklyData.masukan
+                val tanggal = weeklyData.day
 
 
                 val incomeEntries = mutableListOf<BarEntry>()
@@ -107,19 +104,24 @@ class ReportWeeklyFragment : Fragment() {
                 }
 
                 val expenseDataSet = BarDataSet(expenseEntries, "Pengeluaran").apply {
-                    color = Color.parseColor("#E20000") // Set color to blue
+                    color = Color.parseColor("#E20000") // Set color to red
                     setDrawValues(false)
                 }
 
-                // Create the LineData with the data sets
                 val data = BarData(incomeDataSet, expenseDataSet)
-
-                // Set the data to the barChart
                 binding.barChart.data = data
 
-                // Refresh the chart
-                binding.barChart.invalidate()
+                val barWidth = 0.3f
+                val barSpace = 0.05f
+                val groupSpace = 0.3f
+                data.barWidth = barWidth
 
+
+
+                binding.barChart.groupBars(0f, groupSpace, barSpace)
+
+
+                binding.barChart.invalidate()
                 // Set the x-axis value formatter
                 binding.barChart.xAxis.valueFormatter = object : ValueFormatter() {
                     private val months = tanggal?.toTypedArray()
@@ -133,8 +135,10 @@ class ReportWeeklyFragment : Fragment() {
                 binding.barChart.xAxis.setDrawGridLines(false) // Disable vertical grid lines
                 binding.barChart.axisLeft.setDrawGridLines(true) // Enable horizontal grid lines on left Y-axis
                 binding.barChart.axisRight.setDrawGridLines(true) // Enable horizontal grid lines on right Y-axis
-                binding.barChart.axisLeft.gridColor = Color.parseColor("#E3E9ED") // Set left Y-axis grid color to gray
-                binding.barChart.axisRight.gridColor = Color.parseColor("#E3E9ED") // Set right Y-axis grid color to gray
+                binding.barChart.axisLeft.gridColor =
+                    Color.parseColor("#E3E9ED") // Set left Y-axis grid color to gray
+                binding.barChart.axisRight.gridColor =
+                    Color.parseColor("#E3E9ED") // Set right Y-axis grid color to gray
             } else {
                 Log.d("ReportMontlyFragment", "Failed to fetch data")
             }

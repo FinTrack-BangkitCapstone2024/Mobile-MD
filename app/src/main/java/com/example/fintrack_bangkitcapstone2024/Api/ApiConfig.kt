@@ -16,9 +16,9 @@ class ApiConfig {
             }
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
-                .connectTimeout(1, TimeUnit.MINUTES) // set timeout untuk koneksi
-                .readTimeout(30, TimeUnit.SECONDS) // set timeout untuk membaca data
-                .writeTimeout(15, TimeUnit.SECONDS) // set timeout untuk menulis data
+                .connectTimeout(60, TimeUnit.MINUTES) // set timeout untuk koneksi
+                .readTimeout(60, TimeUnit.MINUTES) // set timeout untuk membaca data
+                .writeTimeout(60, TimeUnit.MINUTES) // set timeout untuk menulis data
                 .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl(BuildConfig.API_URL)
